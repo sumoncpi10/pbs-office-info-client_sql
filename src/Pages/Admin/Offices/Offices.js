@@ -74,7 +74,7 @@ const Offices = () => {
             pbs, zonal, complainCenter
         };
 
-        fetch('http://localhost:5000/ComplainofficeAdd', {
+        fetch('http://localhost:5000/officeAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

@@ -11,7 +11,6 @@ const DNPInfo = () => {
         /*==================================================================
             [ Daterangepicker ]*/
         // try {
-
         //     $('.js-datepicker').daterangepicker({
         //         "singleDatePicker": true,
         //         "showDropdowns": true,
@@ -56,7 +55,7 @@ const DNPInfo = () => {
 
 
         // } catch (er) { console.log(er); }
-        // /*[ Select 2 Config ]
+        /*[ Select 2 Config ]
         //     ===========================================================*/
 
         try {
@@ -87,7 +86,6 @@ const DNPInfo = () => {
             .then(data => {
                 console.log(data);
                 setofficeInfo(data);
-
             })
     }, [book]);
 
@@ -99,12 +97,10 @@ const DNPInfo = () => {
             .then(data => {
                 console.log(data);
                 setBook(data);
-
             })
     }
     const handleAddDNPInfo = (e) => {
         e.preventDefault();
-
         const pbs = e.target.pbs.value;
         const zonal = e.target.zonal.value;
         const complainCenter = e.target.complainCenter.value;
@@ -122,7 +118,6 @@ const DNPInfo = () => {
         const AmountOfCashCollection = e.target.AmountOfCashCollection.value;
         const NumOfOtherCollection = e.target.NumOfOtherCollection.value;
         const AmmountOfOtherCollection = e.target.AmmountOfOtherCollection.value;
-
         const enteredBy = user?.email;
 
         // console.log(name, email, password);
@@ -168,7 +163,7 @@ const DNPInfo = () => {
                                     <label className="label">পবিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='29'>রাঙ্গুনিয়া জোনাল অফিস</option>
+                                        {book?.pbs == "2902" && <option value='29'>রাঙ্গুনিয়া জোনাল অফিস</option>}
                                     </select>
                                 </div>
                             </div>
@@ -177,7 +172,7 @@ const DNPInfo = () => {
                                     <label className="label">অফিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='2902'>রাঙ্গুনিয়া জোনাল অফিস</option>
+                                        {book?.zonal == "2902" && <option value='2902'>রাঙ্গুনিয়া জোনাল অফিস</option>}
                                     </select>
                                 </div>
                             </div>
@@ -185,12 +180,12 @@ const DNPInfo = () => {
                                 <label className="label">অভিযোগ কেন্দ্র</label>
                                 <div className="input-group">
                                     <select name="complainCenter" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>
-                                        <option value='290201'>গোচরা</option>
-                                        <option value='290202'>শিলক</option>
-                                        <option value='290204'>সরবভাটা</option>
-                                        <option value='290205'>লিচুবাগান</option>
-                                        <option value='290206'>পদুয়া</option>
+                                        {book?.complainCenter == "290200" && <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>}
+                                        {book?.complainCenter == "290201" && <option value='290201'>গোচরা</option>}
+                                        {book?.complainCenter == "290202" && <option value='290202'>শিলক</option>}
+                                        {book?.complainCenter == "290204" && <option value='290204'>সরবভাটা</option>}
+                                        {book?.complainCenter == "290205" && <option value='290205'>লিচুবাগান</option>}
+                                        {book?.complainCenter == "290206" && <option value='290206'>পদুয়া</option>}
                                     </select>
                                     {/* <div className="select-dropdown"></div> */}
 
@@ -204,18 +199,18 @@ const DNPInfo = () => {
                                     <label className="label">মাসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="month" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='01'>জানুয়ারী</option>
-                                        <option value='02'>ফেব্রুয়ারী</option>
-                                        <option value='03'>মার্চ</option>
-                                        <option value='04'>এপ্রিল</option>
-                                        <option value='05'>মে</option>
-                                        <option value='06'>জুন</option>
-                                        <option value='07'>জুলাই</option>
-                                        <option value='08'>আগষ্ট</option>
-                                        <option value='09'>সেপ্টেম্বর</option>
-                                        <option value='10'>অক্টোবর</option>
-                                        <option value='11'>নভেম্বর</option>
-                                        <option value='12'>ডিসেম্বর</option>
+                                        {book?.month == "01" && <option value='01'>জানুয়ারী</option>}
+                                        {book?.month == "02" && <option value='02'>ফেব্রুয়ারী</option>}
+                                        {book?.month == "03" && <option value='03'>মার্চ</option>}
+                                        {book?.month == "04" && <option value='04'>এপ্রিল</option>}
+                                        {book?.month == "05" && <option value='05'>মে</option>}
+                                        {book?.month == "06" && <option value='06'>জুন</option>}
+                                        {book?.month == "07" && <option value='07'>জুলাই</option>}
+                                        {book?.month == "08" && <option value='08'>আগষ্ট</option>}
+                                        {book?.month == "09" && <option value='09'>সেপ্টেম্বর</option>}
+                                        {book?.month == "10" && <option value='10'>অক্টোবর</option>}
+                                        {book?.month == "11" && <option value='11'>নভেম্বর</option>}
+                                        {book?.month == "12" && <option value='12'>ডিসেম্বর</option>}
                                     </select>
                                 </div>
                             </div>
@@ -223,10 +218,10 @@ const DNPInfo = () => {
                                 <label className="label">বছর</label>
                                 <div className="input-group">
                                     <select name="year" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='2022'>2022</option>
-                                        <option value='2023'>2023</option>
-                                        <option value='2024'>2024</option>
-                                        <option value='2025'>2025</option>
+                                        {book?.year == "2022" && <option value='2022'>2022</option>}
+                                        {book?.year == "2023" && <option value='2023'>2023</option>}
+                                        {book?.year == "2024" && <option value='2024'>2024</option>}
+                                        {book?.year == "2025" && <option value='2025'>2025</option>}
                                     </select>
                                     {/* <div className="select-dropdown"></div> */}
 
