@@ -6,9 +6,10 @@ import auth from "../../firebase.init";
 
 const Header = () => {
     const [user, loading, error] = useAuthState(auth);
+    // console.log(user);
     const logout = () => {
         signOut(auth);
-        localStorage.removeItem('accessToken');
+        // localStorage.removeItem('accessToken');
     };
     return (
         <nav className="navbar navbar-expand-lg sticky-top">
@@ -22,7 +23,6 @@ const Header = () => {
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
-
                         <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Info Entry
@@ -50,8 +50,9 @@ const Header = () => {
                                 Admin
                             </Link>
                             <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" to="/">Action</Link></li>
-                                <li><Link className="dropdown-item" to="/">Another action</Link></li>
+                                <li><Link className="dropdown-item" to="/users">Manage Users</Link></li>
+                                <li><Link className="dropdown-item" to="/books">Manage Books</Link></li>
+                                <li><Link className="dropdown-item" to="/offices">Manage Office</Link></li>
                                 <li><hr className="dropdown-divider" /></li>
                                 <li><Link className="dropdown-item" to="/">Something else here</Link></li>
                             </ul>
@@ -69,11 +70,10 @@ const Header = () => {
                             :
                             <div className="flex-shrink-0 dropdown">
                                 <a href="#" className="d-block link-dark text-decoration-none dropdown-toggle show" data-bs-toggle="dropdown" aria-expanded="true">
-                                    <img src={user.photoURL ? user?.photoURL : "https://api.lorem.space/image/face?hash=33791"} alt="mdo" width="32" height="32" className="rounded-circle" />
+                                    <img src={user.photoURL ? user.photoURL : "https://api.lorem.space/image/face?hash=33791"} alt="mdo" width="32" height="32" className="rounded-circle" />
                                 </a>
                                 <ul className=" dropdown-menu text-small shadow collapse" data-popper-placement="bottom-end" style={{ "position": "absolute", "inset": "0px 0px auto auto", "margin": "0px", "transform": "translate(0px, 34px)" }}>
                                     <li >
-
                                         <button className="d-flex justify-content-between  ">{user?.displayName}</button>
                                     </li>
                                     <hr></hr>
@@ -82,10 +82,7 @@ const Header = () => {
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><a className="dropdown-item" onClick={logout}>Sign out</a></li>
                                 </ul>
-
                             </div>
-
-
                     }
                 </div>
             </div>
