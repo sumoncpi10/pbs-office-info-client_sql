@@ -1,0 +1,217 @@
+import React, { useEffect, useState } from 'react';
+import './DNPReports.css';
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
+const CollectionReports = () => {
+    const [collectionInfo, setCollectionInfo] = useState([]);
+    const [users, SetUsers] = useState([]);
+    const [cdate, setCDate] = useState(new Date());
+    let defaultValue;
+    useEffect(() => {
+        defaultValue = cdate.toISOString().split('T')[0];
+    }, [cdate]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/collections`)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data)
+                // setCollectionInfo(data);
+            })
+    }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/users`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                SetUsers(data);
+            })
+    }, []);
+    const btnSearch = (e) => {
+        e.preventDefault();
+        // console.log(cdate);
+        fetch(`http://localhost:5000/Collection?cdate=${defaultValue}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setCollectionInfo(data);
+            })
+    }
+
+    return (
+        <div>
+            <div class="container">
+                <div class="row align-items-center">
+                    <form onSubmit={btnSearch} className="d-flex flex-column" role="search">
+                        <div className="mx-auto">
+                            <DayPicker
+                                mode="single"
+                                selected={cdate}
+                                onSelect={setCDate}
+                            />
+                            <p className="text-center mb-3 text-warning"><span className='text-dark'>You Have selected:</span>{format(cdate, 'PP')}</p>
+                        </div>
+
+                        <div className="row row-space ">
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>পবিসের নাম</label>
+                                <div className="input-group">
+                                    <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='29'>চট্টগ্রাম পবিস-২</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>জোনালের নাম</label>
+                                <div className="input-group">
+                                    <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='2902'>রাঙ্গুনিয়া জোনাল অফিস</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>অভিযোগ কেন্দ্র</label>
+                                <div className="input-group">
+                                    <select name="complainCenter" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>
+                                        <option value='290201'>গোচরা</option>
+                                        <option value='290202'>শিলক</option>
+                                        <option value='290204'>সরবভাটা</option>
+                                        <option value='290205'>লিচুবাগান</option>
+                                        <option value='290206'>পদুয়া</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>বই নং</label>
+                                <div className="input-group">
+                                    <select name="bookNo" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    </select>
+                                </div>
+                            </div>
+                            <button className="btn btn-outline-secondary bg-secondary" type="submit">Search</button>
+                        </div >
+
+
+                    </form >
+                </div >
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <h5 class="card-title">মোট আদায় <span class="text-success fw-normal ms-2">({collectionInfo?.length})</span></h5>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
+                            {/* <div>
+                                <ul class="nav nav-pills">
+                                    <li class="nav-item">
+                                        <a
+                                            aria-current="page"
+                                            href="#"
+                                            class="router-link-active router-link-exact-active nav-link active"
+                                            data-bs-toggle="tooltip"
+                                            data-bs-placement="top"
+                                            title=""
+                                            data-bs-original-title="List"
+                                            aria-label="List"
+                                        >
+                                            <i class="bx bx-list-ul"></i>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Grid" aria-label="Grid"><i class="bx bx-grid-alt"></i></a>
+                                    </li>
+                                </ul>
+                            </div> */}
+                            <div>
+                                <button class="btn btn-primary"><FontAwesomeIcon icon={faFilePdf} /> Download PDF</button>
+                            </div>
+                            <div class="dropdown">
+                                <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-horizontal-rounded"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="">
+                            <div class="table-responsive">
+                                <table class="table project-list-table table-nowrap align-middle table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="ps-4" style={{ "width": "50px" }}>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
+                                            </th>
+                                            <th scope="col">বই</th>
+                                            <th scope="col">নগদ(টি)</th>
+                                            <th scope="col">নগদ(টাকা)</th>
+                                            <th scope="col">অন্যান্য(টি)</th>
+                                            <th scope="col">অন্যান্য(টাকা)</th>
+                                            <th scope="col">ডিসি(টি)</th>
+                                            <th scope="col">ডিসি(টাকা)</th>
+                                            <th scope="col">আদায়কারী</th>
+                                            {/* <th scope="col" style={{ "width": "200px" }}>Action</th> */}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            collectionInfo.map(collection => <tr>
+                                                <th scope="row" class="ps-4">
+                                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
+                                                </th>
+                                                <td><span class="badge badge-soft-success mb-0">{collection.bookNo}</span></td>
+                                                <td>{collection.NumOfCashCollection}</td>
+                                                <td>{collection.AmountOfCashCollection}</td>
+                                                <td>{collection.NumOfOtherCollection}</td>
+                                                <td>{collection.AmmountOfOtherCollection}</td>
+                                                <td>{collection.NumOfDC}</td>
+                                                <td>{collection.amountOfDcConsumer}</td>
+                                                {
+                                                    users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
+                                                }
+                                            </tr>)
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* <div class="row g-0 align-items-center pb-4">
+                    <div class="col-sm-6">
+                        <div><p class="mb-sm-0">Showing 1 to 10 of 57 entries</p></div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="float-sm-end">
+                            <ul class="pagination mb-sm-0">
+                                <li class="page-item disabled">
+                                    <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
+                                </li>
+                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                <li class="page-item"><a href="#" class="page-link">3</a></li>
+                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                <li class="page-item">
+                                    <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div> */}
+            </div >
+        </div >
+    );
+};
+
+export default CollectionReports;

@@ -70,6 +70,7 @@ const Books = () => {
                                             </th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Position</th>
+                                            <th scope="col">Zonal</th>
                                             <th scope="col">Complain Center</th>
                                             <th scope="col">Book No</th>
                                             <th scope="col">Number Of Consumer</th>
@@ -87,10 +88,11 @@ const Books = () => {
                                                 <td><a href="#" class="text-body">{book?.empName}</a></td>
                                                 <td><span class="badge badge-soft-success mb-0">{book?.empDesignation}</span></td>
                                                 <td>{book?.zonal}</td>
+                                                <td>{book?.complainCenter}</td>
                                                 <td>{book?.bookNo}</td>
                                                 <td>{book?.numberOfConsumer}</td>
                                                 <td>{book?.numberOfDcConsumer}</td>
-                                                <td>
+                                                {/* <td>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
                                                             <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></a>
@@ -105,7 +107,7 @@ const Books = () => {
                                                             </div>
                                                         </li>
                                                     </ul>
-                                                </td>
+                                                </td> */}
                                             </tr>)
                                         }
 

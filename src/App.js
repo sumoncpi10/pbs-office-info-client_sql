@@ -8,6 +8,7 @@ import DNPInfo from './Pages/InfoEntry/DNPInfo';
 import BookInfo from './Pages/Admin/Books/BookInfo';
 import RequireAuth from './Pages/Login/RequireAuth';
 import DNPReports from './Pages/Reports/DNPReports';
+import CollectionReports from './Pages/Reports/CollectionReports';
 import Login from './Pages/Login/Login';
 import Header from './Pages/Shared/Header';
 import Navbar from './Pages/Shared/Navbar';
@@ -26,7 +27,7 @@ function App() {
           <Route path="/" element={< Home />}></Route>
           <Route path="/dnp-info" element={<RequireAuth><DNPInfo /></RequireAuth>}></Route>
           <Route path="/book-info" element={<RequireAuth><BookInfo /></RequireAuth>}></Route>
-          <Route path="/dnp-info-report" element={<RequireAuth><DNPReports /></RequireAuth>}></Route>
+          <Route path="/collection-info-report" element={<RequireAuth><CollectionReports /></RequireAuth>}></Route>
           <Route path="/dnp-info-report" element={<RequireAuth><DNPReports /></RequireAuth>}></Route>
           <Route path="/users" element={<RequireAuth><Users /></RequireAuth>}></Route>
           <Route path="/books" element={<RequireAuth><Books></Books></RequireAuth>}></Route>

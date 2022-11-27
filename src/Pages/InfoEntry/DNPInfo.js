@@ -4,59 +4,15 @@ import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useEffect, useState } from 'react';
+
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
 const DNPInfo = () => {
 
     (function ($) {
         'use strict';
-        /*==================================================================
-            [ Daterangepicker ]*/
-        // try {
-        //     $('.js-datepicker').daterangepicker({
-        //         "singleDatePicker": true,
-        //         "showDropdowns": true,
-        //         "autoUpdateInput": false,
-        //         locale: {
-        //             format: 'DD/MM/YYYY'
-        //         },
-        //     });
 
-        //     var myCalendar = $('.js-datepicker');
-        //     var isClick = 0;
-
-        //     $(window).on('click', function () {
-        //         isClick = 0;
-        //     });
-
-        //     $(myCalendar).on('apply.daterangepicker', function (ev, picker) {
-        //         isClick = 0;
-        //         $(this).val(picker.startDate.format('DD/MM/YYYY'));
-
-        //     });
-
-        //     $('.js-btn-calendar').on('click', function (e) {
-        //         e.stopPropagation();
-
-        //         if (isClick === 1) isClick = 0;
-        //         else if (isClick === 0) isClick = 1;
-
-        //         if (isClick === 1) {
-        //             myCalendar.focus();
-        //         }
-        //     });
-
-        //     $(myCalendar).on('click', function (e) {
-        //         e.stopPropagation();
-        //         isClick = 1;
-        //     });
-
-        //     $('.daterangepicker').on('click', function (e) {
-        //         e.stopPropagation();
-        //     });
-
-
-        // } catch (er) { console.log(er); }
-        /*[ Select 2 Config ]
-        //     ===========================================================*/
 
         try {
             var selectSimple = $('.js-select-simple');
@@ -77,15 +33,29 @@ const DNPInfo = () => {
 
     const [user, loading, error] = useAuthState(auth);
     const [book, setBook] = useState([]);
+    const [users, SetUsers] = useState([]);
     const [officeInfo, setofficeInfo] = useState([]);
-    const today = new Date(),
-        date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    const today = new Date();
+    // const numberOfDaysToAdd = 3;
+    const date = today.setDate(today.getDate());
+    const defaultValue = new Date(date).toISOString().split('T')[0];
+    console.log(defaultValue);
+    // const today = new Date(),
+    //     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/office?complainCenter=${book?.complainCenter ? book?.complainCenter : book?.zonal}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             setofficeInfo(data);
+    //         })
+    // }, [book]);
     useEffect(() => {
-        fetch(`http://localhost:5000/office?complainCenter=${book?.complainCenter ? book?.complainCenter : book?.zonal}`)
+        fetch(`http://localhost:5000/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                setofficeInfo(data);
+                SetUsers(data);
             })
     }, [book]);
 
@@ -101,6 +71,8 @@ const DNPInfo = () => {
     }
     const handleAddDNPInfo = (e) => {
         e.preventDefault();
+        const cdate = e.target.cdate.value;
+        const collectedBy = e.target.collectedBy.value;
         const pbs = e.target.pbs.value;
         const zonal = e.target.zonal.value;
         const complainCenter = e.target.complainCenter.value;
@@ -118,16 +90,18 @@ const DNPInfo = () => {
         const AmountOfCashCollection = e.target.AmountOfCashCollection.value;
         const NumOfOtherCollection = e.target.NumOfOtherCollection.value;
         const AmmountOfOtherCollection = e.target.AmmountOfOtherCollection.value;
+        const NumOfDC = e.target.NumOfDC.value;
+        const AmmountOfDC = e.target.AmmountOfDC.value;
         const enteredBy = user?.email;
 
         // console.log(name, email, password);
         const product = {
-            pbs, zonal, complainCenter, month, year, bookNo, numberOfConsumer, empName, empDesignation, numberOfDcConsumer, amountOfDcConsumer, Days90UpConsumerMonthStart, Days90UpConsumerMonthEnd, NumOfCashCollection, AmountOfCashCollection, NumOfOtherCollection, AmmountOfOtherCollection, today, enteredBy
+            cdate, collectedBy, pbs, zonal, complainCenter, month, year, bookNo, numberOfConsumer, empName, empDesignation, numberOfDcConsumer, amountOfDcConsumer, Days90UpConsumerMonthStart, Days90UpConsumerMonthEnd, NumOfCashCollection, AmountOfCashCollection, NumOfOtherCollection, AmmountOfOtherCollection, NumOfDC, AmmountOfDC, today, enteredBy
         };
         console.log(product);
         // send data to the server
 
-        fetch('http://localhost:5000/dnpBookAdd', {
+        fetch('http://localhost:5000/cashAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -138,17 +112,17 @@ const DNPInfo = () => {
             .then(data => {
                 // console.log('success', data);
                 e.target.reset();
-                toast("Book Add Successfully!");
+                setBook("");
+                toast("DNP Update Successfully!");
             })
     }
-
+    const [cdate, setCDate] = useState(new Date());
     return (
         <div className="wrapper wrapper--w680">
             <div className="card card-4">
 
                 <div className="card-body">
                     <h2 className="title">বকেয়া আদায়ের তথ্য</h2>
-
                     <div className="container-fluid p-2 mb-3">
                         <form onSubmit={btnSearch} className="d-flex" role="search">
                             <input name='textSearch' className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -157,13 +131,66 @@ const DNPInfo = () => {
                     </div>
 
                     <form method="POST" onSubmit={handleAddDNPInfo}>
+                        {/* <div className="row row-space">
+                            <div className="col-2 collapse">
+                                <div className="input-group">
+                                    <label className="label">পবিসের নাম</label>
+                                    <input className="input--style-4" type="email" name="email" />
+                                    <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        {book?.pbs == "2902" && <option value='29'>রাঙ্গুনিয়া জোনাল অফিস</option>}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-2">
+                                <div className="input-group">
+                                    <label className="label">অফিসের নাম</label>
+                                    <input className="input--style-4" type="email" name="email" />
+                                    <input type='date'></input>
+                                </div>
+                            </div>
+                            <div className="col-2">
+                                <div className="">
+                                    <DayPicker
+                                        mode="single"
+                                        selected={cdate}
+                                        onSelect={setCDate}
+                                    />
+                                </div>
+                                <p>You Have selected:{format(cdate, 'PP')}</p>
+                            </div>
+                        </div> */}
+                        <div className="row row-space">
+                            <div className="col-2">
+                                <div className="input-group">
+                                    <label className="label">আদায়ের তারিখ</label>
+                                    <input type="date" name="cdate" defaultValue={defaultValue} />
+                                </div>
+                            </div>
+                            <div className="col-2">
+                                <label className="label">আদায়কারী</label>
+                                <div className="input-group">
+                                    <select name="collectedBy" className="" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        {
+                                            users?.map(u => <option key={u._id} value={u._id}>{u.displayName + ', ' + u.designation}</option>)
+                                        }
+                                        {/* {book?.complainCenter == "290200" && <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>}
+                                        {book?.complainCenter == "290201" && <option value='290201'>গোচরা</option>}
+                                        {book?.complainCenter == "290202" && <option value='290202'>শিলক</option>}
+                                        {book?.complainCenter == "290204" && <option value='290204'>সরবভাটা</option>}
+                                        {book?.complainCenter == "290205" && <option value='290205'>লিচুবাগান</option>}
+                                        {book?.complainCenter == "290206" && <option value='290206'>পদুয়া</option>} */}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div className="row row-space">
                             <div className="col-2 collapse">
                                 <div className="input-group">
                                     <label className="label">পবিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        {book?.pbs == "2902" && <option value='29'>রাঙ্গুনিয়া জোনাল অফিস</option>}
+                                        {/* {book?.pbs == "2902" && <option value='29'>রাঙ্গুনিয়া জোনাল অফিস</option>} */}
+                                        <option value='29'>চট্টগ্রাম পবিস-২</option>
                                     </select>
                                 </div>
                             </div>
@@ -187,8 +214,6 @@ const DNPInfo = () => {
                                         {book?.complainCenter == "290205" && <option value='290205'>লিচুবাগান</option>}
                                         {book?.complainCenter == "290206" && <option value='290206'>পদুয়া</option>}
                                     </select>
-                                    {/* <div className="select-dropdown"></div> */}
-
                                 </div>
                             </div>
                         </div>
@@ -197,7 +222,6 @@ const DNPInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">মাসের নাম</label>
-                                    {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="month" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
                                         {book?.month == "01" && <option value='01'>জানুয়ারী</option>}
                                         {book?.month == "02" && <option value='02'>ফেব্রুয়ারী</option>}
@@ -228,7 +252,32 @@ const DNPInfo = () => {
                                 </div>
                             </div>
                         </div>
-
+                        {/* <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        <input class="input--style-4 js-datepicker" type="text" name="birthday" />
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input type="radio" checked="checked" name="gender" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input type="radio" name="gender" />
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> */}
                         <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
@@ -310,6 +359,20 @@ const DNPInfo = () => {
                                 <div className="input-group">
                                     <label className="label">অন্যান্য আদায় টাকা</label>
                                     <input className="input--style-4" type="text" name="AmmountOfOtherCollection" />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row row-space">
+                            <div className="col-2">
+                                <div className="input-group">
+                                    <label className="label">ডিসি সংখ্যা</label>
+                                    <input className="input--style-4" type="text" name="NumOfDC" />
+                                </div>
+                            </div>
+                            <div className="col-2">
+                                <div className="input-group">
+                                    <label className="label">ডিসি টাকা</label>
+                                    <input className="input--style-4" type="text" name="AmmountOfDC" />
                                 </div>
                             </div>
                         </div>
