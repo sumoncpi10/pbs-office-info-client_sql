@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './DNPReports.css';
-import { format } from 'date-fns';
+import { format, parse } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,18 +9,41 @@ const CollectionReports = () => {
     const [collectionInfo, setCollectionInfo] = useState([]);
     const [users, SetUsers] = useState([]);
     const [cdate, setCDate] = useState(new Date());
-    let defaultValue;
-    useEffect(() => {
-        defaultValue = cdate.toISOString().split('T')[0];
-    }, [cdate]);
+    const [NumOfCashCollection, setNumOfCashCollection] = useState(0);
+    const [AmountOfCashCollection, setAmountOfCashCollection] = useState(0);
+    const [NumOfOtherCollection, setNumOfOtherCollection] = useState(0);
+    const [AmmountOfOtherCollection, setAmmountOfOtherCollection] = useState(0);
+    const [NumOfDC, setNumOfDC] = useState(0);
+    const [amountOfDcConsumer, setamountOfDcConsumer] = useState(0);
+
     useEffect(() => {
         fetch(`http://localhost:5000/collections`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data)
-                // setCollectionInfo(data);
+                setCollectionInfo(data);
+                console.log(data);
+                setTimeout(totalAdd(data), 2000);
             })
     }, []);
+    const totalAdd = (e) => {
+        var NumOfCashCollectionadd = 0, AmountOfCashCollectionadd = 0,
+            NumOfOtherCollectionadd = 0, AmmountOfOtherCollectionadd = 0,
+            NumOfDCadd = 0, amountOfDcConsumeradd = 0;
+        for (var i = 0; i < e?.length; i++) {
+            NumOfCashCollectionadd += parseInt(e[i].NumOfCashCollection);
+            AmountOfCashCollectionadd += parseInt(e[i].AmountOfCashCollection);
+            NumOfOtherCollectionadd += parseInt(e[i].NumOfOtherCollection);
+            AmmountOfOtherCollectionadd += parseInt(e[i].AmmountOfOtherCollection);
+            NumOfDCadd += parseInt(e[i].NumOfDC);
+            amountOfDcConsumeradd += parseInt(e[i].amountOfDcConsumer);
+        }
+        setNumOfCashCollection(NumOfCashCollectionadd);
+        setAmountOfCashCollection(AmountOfCashCollectionadd);
+        setNumOfOtherCollection(NumOfOtherCollectionadd);
+        setAmmountOfOtherCollection(AmmountOfOtherCollectionadd);
+        setNumOfDC(NumOfDCadd);
+        setamountOfDcConsumer(amountOfDcConsumeradd);
+    }
     useEffect(() => {
         fetch(`http://localhost:5000/users`)
             .then(res => res.json())
@@ -29,33 +52,36 @@ const CollectionReports = () => {
                 SetUsers(data);
             })
     }, []);
-    const btnSearch = (e) => {
+
+    const btnSearch = async (e) => {
         e.preventDefault();
-        // console.log(cdate);
-        fetch(`http://localhost:5000/Collection?cdate=${defaultValue}`)
+        console.log(cdate);
+        // defaultValue = cdate?.toISOString().split('T')[0];
+        const pbs = e.target.pbs.value;
+        const zonal = e.target.zonal.value;
+        const complainCenter = e.target.complainCenter.value;
+
+        const dateFrom = e.target.dateFrom.value;
+        const dateTo = e.target.dateTo.value;
+        const bookNo = e.target.bookNo.value;
+        console.log(pbs, zonal, complainCenter, dateFrom, dateTo);
+        fetch(`http://localhost:5000/Collection?pbs=${pbs}&zonal=${zonal}&complainCenter=${complainCenter}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 setCollectionInfo(data);
+                console.log(data);
+                setTimeout(totalAdd(data), 2000);
+                // defaultValue = '';
+                e.target.reset();
             })
     }
-
     return (
         <div>
             <div class="container">
                 <div class="row align-items-center">
                     <form onSubmit={btnSearch} className="d-flex flex-column" role="search">
-                        <div className="mx-auto">
-                            <DayPicker
-                                mode="single"
-                                selected={cdate}
-                                onSelect={setCDate}
-                            />
-                            <p className="text-center mb-3 text-warning"><span className='text-dark'>You Have selected:</span>{format(cdate, 'PP')}</p>
-                        </div>
-
                         <div className="row row-space ">
-                            <div className="col-sm-12 col-12 col-md-3">
+                            <div className="col-sm-12 col-12 col-md-4">
                                 <label className="label" style={{ 'color': 'white' }}>পবিসের নাম</label>
                                 <div className="input-group">
                                     <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
@@ -63,7 +89,7 @@ const CollectionReports = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-3">
+                            <div className="col-sm-12 col-12 col-md-4">
                                 <label className="label" style={{ 'color': 'white' }}>জোনালের নাম</label>
                                 <div className="input-group">
                                     <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
@@ -71,10 +97,11 @@ const CollectionReports = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-3">
+                            <div className="col-sm-12 col-12 col-md-4">
                                 <label className="label" style={{ 'color': 'white' }}>অভিযোগ কেন্দ্র</label>
                                 <div className="input-group">
                                     <select name="complainCenter" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value=''></option>
                                         <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>
                                         <option value='290201'>গোচরা</option>
                                         <option value='290202'>শিলক</option>
@@ -84,17 +111,55 @@ const CollectionReports = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-3">
-                                <label className="label" style={{ 'color': 'white' }}>বই নং</label>
+                            {/* <div className="col-sm-12 col-12 col-md-4">
+                                <label className="label" style={{ 'color': 'white' }}>বছর</label>
                                 <div className="input-group">
-                                    <select name="bookNo" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    <select name="year" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='2022' selected>2022</option>
+                                        <option value='2023'>2023</option>
+                                        <option value='2024'>2024</option>
+                                        <option value='2025'>2025</option>
                                     </select>
                                 </div>
                             </div>
+                            <div className="col-sm-12 col-12 col-md-4">
+                                <label className="label" style={{ 'color': 'white' }}>মাসের নাম</label>
+                                <div className="input-group">
+                                    <select name="month" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='01'>জানুয়ারী</option>
+                                        <option value='02'>ফেব্রুয়ারী</option>
+                                        <option value='03'>মার্চ</option>
+                                        <option value='04'>এপ্রিল</option>
+                                        <option value='05'>মে</option>
+                                        <option value='06'>জুন</option>
+                                        <option value='07'>জুলাই</option>
+                                        <option value='08'>আগষ্ট</option>
+                                        <option value='09'>সেপ্টেম্বর</option>
+                                        <option value='10'>অক্টোবর</option>
+                                        <option value='11'>নভেম্বর</option>
+                                        <option value='12'>ডিসেম্বর</option>
+                                    </select>
+                                </div>
+                            </div> */}
+                            <div className="col-sm-12 col-12 col-md-4">
+                                <label className="label" style={{ 'color': 'white' }}>হতে</label>
+                                <input type="date" name='dateFrom' className="input--style-4" style={{ 'line-height': '14px' }} required></input>
+                            </div>
+                            <div className="col-sm-12 col-12 col-md-4">
+                                <label className="label" style={{ 'color': 'white' }}>পর্যন্ত</label>
+                                <input type="date" name='dateTo' className="input--style-4" style={{ 'line-height': '14px' }} required></input>
+                            </div>
+                            <div className="col-sm-12 col-12 col-md-4">
+                                <label className="label" style={{ 'color': 'white' }}>বই নং</label>
+                                <input type="text" name='bookNo' className="input--style-4" style={{ 'line-height': '14px' }}></input>
+
+                                {/* <div className="input-group">
+                                    <select name="bookNo" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    </select>
+                                </div> */}
+                            </div>
                             <button className="btn btn-outline-secondary bg-secondary" type="submit">Search</button>
                         </div >
-
-
                     </form >
                 </div >
                 <div class="row align-items-center">
@@ -178,9 +243,27 @@ const CollectionReports = () => {
                                                 {
                                                     users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
                                                 }
-                                            </tr>)
+                                            </tr>
+                                            )
                                         }
-
+                                        <tr className=' bg-light'>
+                                            <th scope="row" class="ps-4">
+                                                <div class="form-check font-size-16">
+                                                    {/* <input type="checkbox" class="form-check-input" id="contacusercheck1" /> */}
+                                                    <label class="form-check-label" for="contacusercheck1"></label></div>
+                                            </th>
+                                            <td><span class="badge badge-soft-primary mb-0">Total</span></td>
+                                            <td>{NumOfCashCollection ? NumOfCashCollection : ""}</td>
+                                            <td>{AmountOfCashCollection ? AmountOfCashCollection : ""}</td>
+                                            <td>{NumOfOtherCollection ? NumOfOtherCollection : ""}</td>
+                                            <td>{AmmountOfOtherCollection ? AmmountOfOtherCollection : ""}</td>
+                                            <td>{NumOfDC ? NumOfDC : ""}</td>
+                                            <td>{amountOfDcConsumer ? amountOfDcConsumer : ""}</td>
+                                            <td></td>
+                                            {
+                                                // users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
+                                            }
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

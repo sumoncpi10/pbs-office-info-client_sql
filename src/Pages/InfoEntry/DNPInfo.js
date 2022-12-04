@@ -4,19 +4,14 @@ import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { useEffect, useState } from 'react';
-
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 const DNPInfo = () => {
-
     (function ($) {
         'use strict';
-
-
         try {
             var selectSimple = $('.js-select-simple');
-
             selectSimple.each(function () {
                 var that = $(this);
                 var selectBox = that.find('select');
@@ -25,7 +20,6 @@ const DNPInfo = () => {
                     dropdownParent: selectDropdown
                 });
             });
-
         } catch (err) {
             console.log(err);
         }

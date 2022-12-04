@@ -7,8 +7,8 @@ const Books = () => {
         fetch(`http://localhost:5000/dnp`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
                 setBookInfo(data);
+                console.log(data);
 
             })
     }, []);
@@ -92,12 +92,12 @@ const Books = () => {
                                                 <td>{book?.bookNo}</td>
                                                 <td>{book?.numberOfConsumer}</td>
                                                 <td>{book?.numberOfDcConsumer}</td>
-                                                {/* <td>
+                                                <td>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
-                                                            <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></a>
+                                                            <Link to={book?._id} class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></Link>
                                                         </li>
-                                                        <li class="list-inline-item">
+                                                        {/* <li class="list-inline-item">
                                                             <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
                                                         </li>
                                                         <li class="list-inline-item dropdown">
@@ -105,9 +105,9 @@ const Books = () => {
                                                             <div class="dropdown-menu dropdown-menu-end">
                                                                 <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
                                                             </div>
-                                                        </li>
+                                                        </li> */}
                                                     </ul>
-                                                </td> */}
+                                                </td>
                                             </tr>)
                                         }
 
@@ -141,7 +141,7 @@ const Books = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 
