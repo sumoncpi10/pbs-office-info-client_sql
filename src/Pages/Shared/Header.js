@@ -80,7 +80,7 @@ const Header = () => {
                                     </li>
                                     <hr></hr>
                                     <li><a className="dropdown-item" href="#">Settings</a></li>
-                                    <li><a className="dropdown-item" href="#">Profile</a></li>
+                                    <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
                                     <li><hr className="dropdown-divider" /></li>
                                     <li><a className="dropdown-item" onClick={logout}>Sign out</a></li>
                                 </ul>

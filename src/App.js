@@ -19,6 +19,7 @@ import AddUser from './Pages/Admin/Users/AddUser';
 import Books from './Pages/Admin/Books/Books';
 import Offices from './Pages/Admin/Offices/Offices';
 import SignUP from './Pages/Login/SignUP';
+import Profile from './Pages/Admin/Users/Profile';
 
 
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/books" element={<RequireAuth><Books></Books></RequireAuth>}></Route>
           <Route path="/offices" element={<RequireAuth><Offices></Offices></RequireAuth>}></Route>
           <Route path="/addUser" element={<RequireAuth><AddUser /></RequireAuth>}></Route>
+          <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUP />}></Route>
         </Routes>
