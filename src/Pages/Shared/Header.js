@@ -29,9 +29,9 @@ const Header = () => {
                             </Link>
                             <ul className="dropdown-menu">
                                 <li><Link className="dropdown-item" to="/dnp-info">DNP Information</Link></li>
-                                <li><Link className="dropdown-item" to="/">Another action</Link></li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li><Link className="dropdown-item" to="/">Something else here</Link></li>
+                                {/* <li><Link className="dropdown-item" to="/">Another action</Link></li> */}
+                                {/* <li><hr className="dropdown-divider" /></li> */}
+                                {/* <li><Link className="dropdown-item" to="/">Something else here</Link></li> */}
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
@@ -41,9 +41,9 @@ const Header = () => {
                             <ul className="dropdown-menu">
 
                                 <li><Link className="dropdown-item" to="/collection-info-report">আদায়ের তথ্য</Link></li>
-                                <li><Link className="dropdown-item" to="/dnp-info-report">বকেয়ার তথ্য</Link></li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li><Link className="dropdown-item" to="/">Something else here</Link></li>
+                                {/* <li><Link className="dropdown-item" to="/dnp-info-report">বকেয়ার তথ্য</Link></li> */}
+                                {/* <li><hr className="dropdown-divider" /></li> */}
+                                {/* <li><Link className="dropdown-item" to="/">Something else here</Link></li> */}
                             </ul>
                         </li>
                         <li className="nav-item dropdown">
@@ -51,11 +51,11 @@ const Header = () => {
                                 Admin
                             </Link>
                             <ul className="dropdown-menu">
-                                <li><Link className="dropdown-item" to="/users">Manage Users</Link></li>
                                 <li><Link className="dropdown-item" to="/books">Manage Books</Link></li>
-                                <li><Link className="dropdown-item" to="/offices">Manage Office</Link></li>
-                                <li><hr className="dropdown-divider" /></li>
-                                <li><Link className="dropdown-item" to="/">Something else here</Link></li>
+                                <li><Link className="dropdown-item" to="/users">Manage Users</Link></li>
+                                {/* <li><Link className="dropdown-item" to="/offices">Manage Office</Link></li> */}
+                                {/* <li><hr className="dropdown-divider" /></li> */}
+                                {/* <li><Link className="dropdown-item" to="/">Something else here</Link></li> */}
                             </ul>
                         </li>
                         <li className="nav-item">
@@ -65,7 +65,8 @@ const Header = () => {
                     {
                         !user ?
                             <div className="d-flex">
-                                <Link to='/login' className='btn '>Login</Link>
+                                <Link to='/login' className='btn btn-primary'>Login</Link>
+                                <Link to='/signup' className='btn btn-secondary'>Sign Up</Link>
                                 {/* <Link to='/signup' className='btn btn-primary mx-2'>SignUp</Link> */}
                             </div>
                             :

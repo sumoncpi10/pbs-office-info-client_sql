@@ -7,8 +7,8 @@ import { useSendPasswordResetEmail } from 'react-firebase-hooks/auth';
 import auth from '../../firebase.init';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
-// import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-const Login = ({ setuserV }) => {
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+const SignUP = ({ setuserV }) => {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
     const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(
         auth
@@ -17,6 +17,9 @@ const Login = ({ setuserV }) => {
         signInWithEmailAndPassword, inUser
 
     ] = useSignInWithEmailAndPassword(auth);
+    const [
+        createUserWithEmailAndPassword, createuser] = useCreateUserWithEmailAndPassword(auth);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [userG] = useAuthState(auth);
@@ -50,10 +53,39 @@ const Login = ({ setuserV }) => {
             </div>
         );
     }
-    const btnUserCreate = async (e) => {
+    const btnUserCreateG = async (e) => {
         e.preventDefault();
         const r = await signInWithGoogle();
         console.log(r.user)
+        if (await r) {
+            const newuser = await users?.find(user => user.uid == r.user.uid)
+            console.log(newuser)
+            if (newuser) {
+                toast("Signed in Successfully!");
+                navigate(from, { replace: true });
+            }
+            else {
+                fetch('https://pbsofficeinfo.onrender.com/userAdd', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(r?.user)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        // console.log('success', data);
+                        toast("User Create Successfully!");
+                        navigate(from, { replace: true });
+                    })
+            }
+
+        }
+    }
+    const btnUserCreate = async (e) => {
+        e.preventDefault();
+        const r = await createUserWithEmailAndPassword(email, password);
+        console.log(r.user);
         if (await r) {
             const newuser = await users?.find(user => user.uid == r.user.uid)
             console.log(newuser)
@@ -93,7 +125,7 @@ const Login = ({ setuserV }) => {
                                 <div className="icon d-flex align-items-center justify-content-center">
                                     <FontAwesomeIcon icon={faUserAlt} />
                                 </div>
-                                <h3 className="text-center mb-4">Have an account?</h3>
+                                <h3 className="text-center mb-4">Don't Have an account?</h3>
                                 <form method='post' className="login-form">
                                     <div className="form-group">
                                         <input onChange={(e) => setEmail(e.target.value)} name='email' type="text" className="form-control rounded-left" placeholder="Username" required />
@@ -117,15 +149,14 @@ const Login = ({ setuserV }) => {
                                             </button>
                                         </div>
                                         <div class="">
-                                            {/* <a href="#"></a>  */}
-                                            <Link to="/signup">Sign Up</Link>
+                                            <Link to="/login">Login</Link>
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <button onClick={() => signInWithEmailAndPassword(email, password)} type="button" className="btn btn-primary fs-5 px-5 w-100">Login</button>
+                                        <button onClick={btnUserCreate} type="button" className="btn btn-primary fs-5 px-5 w-100">Sign Up</button>
                                     </div>
                                     <div className="form-group">
-                                        <button className="btn btn-secondary w-100" onClick={btnUserCreate}>Continue With Google</button>
+                                        <button className="btn btn-secondary w-100" onClick={btnUserCreateG}>Continue With Google</button>
                                     </div>
 
                                 </form>
@@ -140,4 +171,4 @@ const Login = ({ setuserV }) => {
     );
 };
 
-export default Login;
+export default SignUP;

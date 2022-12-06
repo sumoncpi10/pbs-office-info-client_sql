@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 // import '../../Reports/';
 const Books = () => {
     const [bookInfo, setBookInfo] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
-        fetch(`http://localhost:5000/dnp`)
+        fetch(`https://pbsofficeinfo.onrender.com/dnp`)
             .then(res => res.json())
             .then(data => {
                 setBookInfo(data);
@@ -12,6 +13,13 @@ const Books = () => {
 
             })
     }, []);
+    const btnEdit = id => {
+        const proceed = window.confirm('Are You Sure You Want To Update The Book!');
+        console.log(id, proceed);
+        if (proceed) {
+            navigate(`/books/${id}`);
+        }
+    }
     return (
         <div>
             <div class="container">
@@ -95,7 +103,7 @@ const Books = () => {
                                                 <td>
                                                     <ul class="list-inline mb-0">
                                                         <li class="list-inline-item">
-                                                            <Link to={book?._id} class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></Link>
+                                                            <button onClick={() => btnEdit(book?._id)} class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></button>
                                                         </li>
                                                         {/* <li class="list-inline-item">
                                                             <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
@@ -118,7 +126,7 @@ const Books = () => {
                         </div>
                     </div>
                 </div>
-                <div class="row g-0 align-items-center pb-4">
+                {/* <div class="row g-0 align-items-center pb-4">
                     <div class="col-sm-6">
                         <div><p class="mb-sm-0">Showing 1 to 10 of 57 entries</p></div>
                     </div>
@@ -139,7 +147,7 @@ const Books = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div >
     );

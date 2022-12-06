@@ -12,7 +12,7 @@ import User from './User';
 const Users = () => {
     const [users, setUsers] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfo.onrender.com/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -84,7 +84,7 @@ const Users = () => {
         else if (email && password) {
             const rr = createUserWithEmailAndPassword(email, password);
             if (rr) {
-                fetch('http://localhost:5000/userAdd', {
+                fetch('https://pbsofficeinfo.onrender.com/userAdd', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -213,7 +213,7 @@ const Users = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row g-0 align-items-center pb-4">
+                {/* <div className="row g-0 align-items-center pb-4">
                     <div className="col-sm-6">
                         <div><p className="mb-sm-0">Showing 1 to 10 of 57 entries</p></div>
                     </div>
@@ -234,7 +234,7 @@ const Users = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

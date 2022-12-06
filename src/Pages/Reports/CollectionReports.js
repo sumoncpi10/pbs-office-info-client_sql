@@ -17,7 +17,7 @@ const CollectionReports = () => {
     const [amountOfDcConsumer, setamountOfDcConsumer] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/collections`)
+        fetch(`https://pbsofficeinfo.onrender.com/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);
@@ -45,7 +45,7 @@ const CollectionReports = () => {
         setamountOfDcConsumer(amountOfDcConsumeradd);
     }
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfo.onrender.com/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -65,7 +65,7 @@ const CollectionReports = () => {
         const dateTo = e.target.dateTo.value;
         const bookNo = e.target.bookNo.value;
         console.log(pbs, zonal, complainCenter, dateFrom, dateTo);
-        fetch(`http://localhost:5000/Collection?pbs=${pbs}&zonal=${zonal}&complainCenter=${complainCenter}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}`)
+        fetch(`https://pbsofficeinfo.onrender.com/Collection?pbs=${pbs}&zonal=${zonal}&complainCenter=${complainCenter}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);

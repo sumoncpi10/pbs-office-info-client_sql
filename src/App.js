@@ -12,11 +12,14 @@ import DNPReports from './Pages/Reports/DNPReports';
 import CollectionReports from './Pages/Reports/CollectionReports';
 import Login from './Pages/Login/Login';
 import Header from './Pages/Shared/Header';
+import Footer from './Pages/Shared/Footer';
 import Navbar from './Pages/Shared/Navbar';
 import Users from './Pages/Admin/Users/Users';
 import AddUser from './Pages/Admin/Users/AddUser';
 import Books from './Pages/Admin/Books/Books';
 import Offices from './Pages/Admin/Offices/Offices';
+import SignUP from './Pages/Login/SignUP';
+
 
 
 function App() {
@@ -36,7 +39,9 @@ function App() {
           <Route path="/offices" element={<RequireAuth><Offices></Offices></RequireAuth>}></Route>
           <Route path="/addUser" element={<RequireAuth><AddUser /></RequireAuth>}></Route>
           <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<SignUP />}></Route>
         </Routes>
+        <Footer></Footer>
       </div >
       <ToastContainer />
     </>

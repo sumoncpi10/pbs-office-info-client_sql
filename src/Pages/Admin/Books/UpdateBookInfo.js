@@ -3,13 +3,14 @@ import '../../InfoEntry/DNPInfo';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
-import { useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 const UpdateBookInfo = () => {
     const { id } = useParams();
     const [book, setBook] = useState([]);
+    const navigate = useNavigate();
     useEffect(() => {
-        fetch(`http://localhost:5000/bookbyId/${id}`)
+        fetch(`https://pbsofficeinfo.onrender.com/bookbyId/${id}`)
             .then(res => res.json())
             .then(data => {
                 setBook(data);
@@ -42,8 +43,9 @@ const UpdateBookInfo = () => {
         console.log(product);
         // send data to the server
 
-        fetch('http://localhost:5000/dnpBookAdd', {
-            method: 'POST',
+
+        fetch(`https://pbsofficeinfo.onrender.com/book/${id}`, {
+            method: 'PUT',
             headers: {
                 'content-type': 'application/json'
             },
@@ -53,10 +55,65 @@ const UpdateBookInfo = () => {
             .then(data => {
                 // console.log('success', data);
                 e.target.reset();
-                toast("Book Add Successfully!");
+                toast("Book Update Successfully!");
+                navigate('/books');
             })
     }
     const [user, loading, error] = useAuthState(auth);
+    const numberOfConsumerChange = (e) => {
+        const { numberOfConsumer, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { numberOfConsumer: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const empNameChange = (e) => {
+        const { empName, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { empName: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const empDesignationChange = (e) => {
+        const { empDesignation, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { empDesignation: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const numberOfDcConsumerChange = (e) => {
+        const { numberOfDcConsumer, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { numberOfDcConsumer: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const amountOfDcConsumerChange = (e) => {
+        const { amountOfDcConsumer, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { amountOfDcConsumer: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const Days90UpConsumerMonthStartChange = (e) => {
+        const { Days90UpConsumerMonthStart, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { Days90UpConsumerMonthStart: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const Days90UpConsumerMonthEndChange = (e) => {
+        const { Days90UpConsumerMonthEnd, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { Days90UpConsumerMonthEnd: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const kwChange = (e) => {
+        const { kw, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { kw: newBrand, ...rest };
+        setBook(newProduct);
+    }
+    const empPhoneChange = (e) => {
+        const { empPhone, ...rest } = book;
+        const newBrand = e.target.value;
+        const newProduct = { empPhone: newBrand, ...rest };
+        setBook(newProduct);
+    }
     return (
         <div className="wrapper wrapper--w680">
             <div className="card card-4">
@@ -143,18 +200,150 @@ const UpdateBookInfo = () => {
                                     <label className="label">মাসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="month" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='01' > জানুয়ারী</option>
-                                        <option value='02'>ফেব্রুয়ারী</option>
-                                        <option value='03'>মার্চ</option>
-                                        <option value='04'>এপ্রিল</option>
-                                        <option value='05'>মে</option>
-                                        <option value='06'>জুন</option>
-                                        <option value='07'>জুলাই</option>
-                                        <option value='08'>আগষ্ট</option>
-                                        <option value='09'>সেপ্টেম্বর</option>
-                                        <option value='10'>অক্টোবর</option>
-                                        <option value='11'>নভেম্বর</option>
-                                        <option value='12'>ডিসেম্বর</option>
+                                        {book?.month == "01" && <><option value='01' selected> জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "02" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02' selected>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "03" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03' selected>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "04" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04' selected>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "05" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05' selected>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "06" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06' selected>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "07" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07' selected>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "08" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08' selected>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "09" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09' selected>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "10" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10' selected>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "11" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11' selected>নভেম্বর</option>
+                                            <option value='12'>ডিসেম্বর</option></>}
+                                        {book?.month == "12" && <><option value='01' > জানুয়ারী</option>
+                                            <option value='02'>ফেব্রুয়ারী</option>
+                                            <option value='03'>মার্চ</option>
+                                            <option value='04'>এপ্রিল</option>
+                                            <option value='05'>মে</option>
+                                            <option value='06'>জুন</option>
+                                            <option value='07'>জুলাই</option>
+                                            <option value='08'>আগষ্ট</option>
+                                            <option value='09'>সেপ্টেম্বর</option>
+                                            <option value='10'>অক্টোবর</option>
+                                            <option value='11'>নভেম্বর</option>
+                                            <option value='12' selected>ডিসেম্বর</option></>}
                                     </select>
                                 </div>
                             </div>
@@ -199,7 +388,7 @@ const UpdateBookInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">গ্রাহক সংখ্যা</label>
-                                    <input name='numberOfConsumer' value={book?.numberOfConsumer} className="input--style-4" type="text" />
+                                    <input onChange={numberOfConsumerChange} name='numberOfConsumer' value={book?.numberOfConsumer} className="input--style-4" type="text" />
                                 </div>
                             </div>
                         </div>
@@ -207,13 +396,13 @@ const UpdateBookInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">নাম</label>
-                                    <input className="input--style-4" type="text" value={book?.empName} name="empName" />
+                                    <input onChange={empNameChange} className="input--style-4" type="text" value={book?.empName} name="empName" />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">পদবী</label>
-                                    <input className="input--style-4" type="text" value={book?.empDesignation} name="empDesignation" />
+                                    <input onChange={empDesignationChange} className="input--style-4" type="text" value={book?.empDesignation} name="empDesignation" />
                                 </div>
                             </div>
                         </div>
@@ -223,13 +412,13 @@ const UpdateBookInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ডিসি গ্রাহকের সংখ্যা</label>
-                                    <input className="input--style-4" type="text" value={book?.numberOfDcConsumer} name="numberOfDcConsumer" />
+                                    <input onChange={numberOfDcConsumerChange} className="input--style-4" type="text" value={book?.numberOfDcConsumer} name="numberOfDcConsumer" />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ডিসি গ্রাহকের টাকা</label>
-                                    <input className="input--style-4" type="text" value={book?.amountOfDcConsumer} name="amountOfDcConsumer" />
+                                    <input onChange={amountOfDcConsumerChange} className="input--style-4" type="text" value={book?.amountOfDcConsumer} name="amountOfDcConsumer" />
                                 </div>
                             </div>
                         </div>
@@ -237,13 +426,13 @@ const UpdateBookInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">৯০ দিনের উর্ধ্বে গ্রাহক সংখ্যা(মাসের শুরুতে)</label>
-                                    <input className="input--style-4" type="text" value={book?.Days90UpConsumerMonthStart} name="Days90UpConsumerMonthStart" />
+                                    <input onChange={Days90UpConsumerMonthStartChange} className="input--style-4" type="text" value={book?.Days90UpConsumerMonthStart} name="Days90UpConsumerMonthStart" />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">৯০ দিনের উর্ধ্বে গ্রাহক সংখ্যা(মাসের শেষে)</label>
-                                    <input className="input--style-4" type="text" value={book?.Days90UpConsumerMonthEnd} name="Days90UpConsumerMonthEnd" />
+                                    <input onChange={Days90UpConsumerMonthEndChange} className="input--style-4" type="text" value={book?.Days90UpConsumerMonthEnd} name="Days90UpConsumerMonthEnd" />
                                 </div>
                             </div>
                         </div>
@@ -251,13 +440,13 @@ const UpdateBookInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">কিলোওয়াট</label>
-                                    <input className="input--style-4" type="text" value={book?.kw} name="kw" />
+                                    <input onChange={kwChange} className="input--style-4" type="text" value={book?.kw} name="kw" />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">দ্বায়িত্বপ্রাপ্ত ব্যাক্তির মোবাইল নং</label>
-                                    <input className="input--style-4" type="text" value={book?.empPhone} name="empPhone" />
+                                    <input onChange={empPhoneChange} className="input--style-4" type="text" value={book?.empPhone} name="empPhone" />
                                 </div>
                             </div>
                         </div>

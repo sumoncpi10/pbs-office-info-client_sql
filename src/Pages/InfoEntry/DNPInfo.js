@@ -37,7 +37,7 @@ const DNPInfo = () => {
     // const today = new Date(),
     //     date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/office?complainCenter=${book?.complainCenter ? book?.complainCenter : book?.zonal}`)
+    //     fetch(`https://pbsofficeinfo.onrender.com/office?complainCenter=${book?.complainCenter ? book?.complainCenter : book?.zonal}`)
     //         .then(res => res.json())
     //         .then(data => {
     //             console.log(data);
@@ -45,7 +45,7 @@ const DNPInfo = () => {
     //         })
     // }, [book]);
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfo.onrender.com/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -56,7 +56,7 @@ const DNPInfo = () => {
     const btnSearch = (e) => {
         e.preventDefault();
         const textSearch = e.target.textSearch.value;
-        fetch(`http://localhost:5000/book/${textSearch}`)
+        fetch(`https://pbsofficeinfo.onrender.com/book/${textSearch}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -95,7 +95,7 @@ const DNPInfo = () => {
         console.log(product);
         // send data to the server
 
-        fetch('http://localhost:5000/cashAdd', {
+        fetch('https://pbsofficeinfo.onrender.com/cashAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
