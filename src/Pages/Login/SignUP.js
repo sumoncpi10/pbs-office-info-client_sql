@@ -58,7 +58,7 @@ const SignUP = ({ setuserV }) => {
         const r = await signInWithGoogle();
         console.log(r.user)
         if (await r) {
-            const newuser = await users?.find(user => user.uid == r.user.uid)
+            const newuser = await users?.find(user => user.email == r.user.email)
             console.log(newuser)
             if (newuser) {
                 toast("Signed in Successfully!");
@@ -87,7 +87,7 @@ const SignUP = ({ setuserV }) => {
         const r = await createUserWithEmailAndPassword(email, password);
         console.log(r.user);
         if (await r) {
-            const newuser = await users?.find(user => user.uid == r.user.uid)
+            const newuser = await users?.find(user => user.email == r.user.email)
             console.log(newuser)
             if (newuser) {
                 toast("Signed in Successfully!");

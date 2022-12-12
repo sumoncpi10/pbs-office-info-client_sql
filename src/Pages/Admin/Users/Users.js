@@ -145,7 +145,7 @@ const Users = () => {
                 <div className="row align-items-center">
                     <div className="col-md-6">
                         <div className="mb-3">
-                            <h5 className="card-title">Contact List <span className="text-muted fw-normal ms-2">(834)</span></h5>
+                            <h5 className="card-title">Users List <span className="text-muted fw-normal ms-2">({users?.length})</span></h5>
                         </div>
                     </div>
                     <div className="col-md-6">

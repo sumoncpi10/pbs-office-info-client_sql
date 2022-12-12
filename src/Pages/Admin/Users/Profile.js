@@ -55,8 +55,6 @@ const Profile = () => {
         const empPhone = e.target.empPhone.value;
         const photoURL = e.target.photoURL.value;
         const designation = e.target.designation.value;
-
-
         const enteredBy = user?.email;
 
         // console.log(name, email, password);
