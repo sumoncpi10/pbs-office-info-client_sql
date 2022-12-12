@@ -223,6 +223,7 @@ const CollectionReports = () => {
                                             <th scope="col">অন্যান্য(টাকা)</th>
                                             <th scope="col">ডিসি(টি)</th>
                                             <th scope="col">ডিসি(টাকা)</th>
+                                            <th scope="col">তারিখ</th>
                                             <th scope="col">আদায়কারী</th>
                                             {/* <th scope="col" style={{ "width": "200px" }}>Action</th> */}
                                         </tr>
@@ -240,6 +241,7 @@ const CollectionReports = () => {
                                                 <td>{collection.AmmountOfOtherCollection}</td>
                                                 <td>{collection.NumOfDC}</td>
                                                 <td>{collection.amountOfDcConsumer}</td>
+                                                <td>{collection.cdate}</td>
                                                 {
                                                     users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
                                                 }
@@ -259,6 +261,7 @@ const CollectionReports = () => {
                                             <td>{AmmountOfOtherCollection ? AmmountOfOtherCollection : ""}</td>
                                             <td>{NumOfDC ? NumOfDC : ""}</td>
                                             <td>{amountOfDcConsumer ? amountOfDcConsumer : ""}</td>
+                                            <td></td>
                                             <td></td>
                                             {
                                                 // users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')

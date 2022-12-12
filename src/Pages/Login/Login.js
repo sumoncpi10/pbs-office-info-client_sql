@@ -38,7 +38,6 @@ const Login = ({ setuserV }) => {
             .then(data => {
                 console.log(data)
                 setUsers(data);
-
             })
     }, []);
 

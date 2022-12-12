@@ -289,7 +289,7 @@ const DNPInfo = () => {
                         <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
-                                    <label className="label">নাম</label>
+                                    <label className="label">দ্বায়িত্বপ্রাপ্ত কর্মকর্তা/কর্মচারীর নাম</label>
                                     <input className="input--style-4" type="text" name="empName" value={book?.empName} disabled />
                                 </div>
                             </div>
