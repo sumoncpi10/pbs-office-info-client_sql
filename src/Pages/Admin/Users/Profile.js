@@ -7,6 +7,7 @@ import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import auth from '../../../firebase.init';
+import { updateProfile } from 'firebase/auth';
 const Profile = () => {
     (function ($) {
         'use strict';
@@ -28,6 +29,8 @@ const Profile = () => {
     const [user, loading, error] = useAuthState(auth);
     const [book, setBook] = useState([]);
     const [users, SetUsers] = useState([]);
+    const [displayName, setdisplayName] = useState('');
+    const [designation, setdesignation] = useState('');
     const [officeInfo, setofficeInfo] = useState([]);
     // console.log(user)
     useEffect(() => {
@@ -51,6 +54,7 @@ const Profile = () => {
     }
     const handleUpdateUserInfo = (e) => {
         e.preventDefault();
+
         const displayName = e.target.displayName.value;
         const empPhone = e.target.empPhone.value;
         const photoURL = e.target.photoURL.value;
@@ -61,6 +65,7 @@ const Profile = () => {
         const product = {
             displayName, empPhone, photoURL, designation, enteredBy
         };
+
         console.log(product);
         // send data to the server
         fetch(`https://pbsofficeinfo.onrender.com/user/${user?.uid}`, {
@@ -84,6 +89,7 @@ const Profile = () => {
         const newBrand = e.target.value;
         const newProduct = { displayName: newBrand, ...rest };
         SetUsers(newProduct);
+        setdisplayName(e.target.value)
     }
     const empPhoneChange = (e) => {
         const { empPhone, ...rest } = users;
@@ -121,7 +127,7 @@ const Profile = () => {
                             <div className="col-2">
                                 <label className="label">পদবী</label>
                                 <div className="input-group">
-                                    <select name="designation" className="" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    <select name="designation" onChange={(e) => setdesignation(e.target.value)} className="" style={{ "width": "550px", "lineHeight": "50px" }}>
                                         {/* {
                                              users?.map(u => <option key={u._id} sele selected  value={u._id}>{u.displayName + ', ' + u.designation}</option>)
                                         } */}
@@ -135,6 +141,7 @@ const Profile = () => {
                                         {users?.designation == 'msc' && <option selected value='msc'>MSC</option>}
                                         {users?.designation == 'sc' && <option selected value='sc'>Store Coordinator</option>}
                                         {users?.designation == 'aec' && <option selected value='aec'>AEC</option>}
+                                        {users?.designation == 'aje' && <option value='aje'>AJE</option>}
                                         {users?.designation == 'bs' && <option selected value='bs'>BS</option>}
                                         {users?.designation == 'mts' && <option selected value='mts'>MTS</option>}
                                         {users?.designation == 'sk' && <option selected value='sk'>Store Keeper</option>}
@@ -161,6 +168,7 @@ const Profile = () => {
                                         <option value='puc'>PUC</option>
                                         <option value='msc'>MSC</option>
                                         <option value='sc'>Store Coordinator</option>
+                                        <option value='aje'>AJE</option>
                                         <option value='aec'>AEC</option>
                                         <option value='bs'>BS</option>
                                         <option value='mts'>MTS</option>
@@ -216,10 +224,18 @@ const Profile = () => {
                         <div className="p-t-15">
                             <button className="btn btn--radius-2 btn-primary" type="submit">Submit</button>
                         </div>
+                        <div className="p-t-15">
+                            <button className="btn btn--radius-2 btn-primary" onClick={async () => {
+                                const success = await updateProfile({ displayName, designation });
+                                if (success) {
+                                    alert('Updated profile');
+                                }
+                            }} type="submit">Update</button>
+                        </div>
                     </form>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
 
     );
 }

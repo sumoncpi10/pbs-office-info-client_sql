@@ -14,7 +14,7 @@ const CollectionReports = () => {
     const [NumOfOtherCollection, setNumOfOtherCollection] = useState(0);
     const [AmmountOfOtherCollection, setAmmountOfOtherCollection] = useState(0);
     const [NumOfDC, setNumOfDC] = useState(0);
-    const [amountOfDcConsumer, setamountOfDcConsumer] = useState(0);
+    const [AmmountOfDC, setAmmountOfDC] = useState(0);
 
     useEffect(() => {
         fetch(`https://pbsofficeinfo.onrender.com/collections`)
@@ -28,21 +28,21 @@ const CollectionReports = () => {
     const totalAdd = (e) => {
         var NumOfCashCollectionadd = 0, AmountOfCashCollectionadd = 0,
             NumOfOtherCollectionadd = 0, AmmountOfOtherCollectionadd = 0,
-            NumOfDCadd = 0, amountOfDcConsumeradd = 0;
+            NumOfDCadd = 0, AmmountOfDCadd = 0;
         for (var i = 0; i < e?.length; i++) {
             NumOfCashCollectionadd += parseInt(e[i].NumOfCashCollection);
             AmountOfCashCollectionadd += parseInt(e[i].AmountOfCashCollection);
             NumOfOtherCollectionadd += parseInt(e[i].NumOfOtherCollection);
             AmmountOfOtherCollectionadd += parseInt(e[i].AmmountOfOtherCollection);
             NumOfDCadd += parseInt(e[i].NumOfDC);
-            amountOfDcConsumeradd += parseInt(e[i].amountOfDcConsumer);
+            AmmountOfDCadd += parseInt(e[i].AmmountOfDC);
         }
         setNumOfCashCollection(NumOfCashCollectionadd);
         setAmountOfCashCollection(AmountOfCashCollectionadd);
         setNumOfOtherCollection(NumOfOtherCollectionadd);
         setAmmountOfOtherCollection(AmmountOfOtherCollectionadd);
         setNumOfDC(NumOfDCadd);
-        setamountOfDcConsumer(amountOfDcConsumeradd);
+        setAmmountOfDC(AmmountOfDCadd);
     }
     useEffect(() => {
         fetch(`https://pbsofficeinfo.onrender.com/users`)
@@ -240,7 +240,7 @@ const CollectionReports = () => {
                                                 <td>{collection.NumOfOtherCollection}</td>
                                                 <td>{collection.AmmountOfOtherCollection}</td>
                                                 <td>{collection.NumOfDC}</td>
-                                                <td>{collection.amountOfDcConsumer}</td>
+                                                <td>{collection.AmmountOfDC}</td>
                                                 <td>{collection.cdate}</td>
                                                 {
                                                     users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
@@ -255,12 +255,12 @@ const CollectionReports = () => {
                                                     <label class="form-check-label" for="contacusercheck1"></label></div>
                                             </th>
                                             <td><span class="badge badge-soft-primary mb-0">Total</span></td>
-                                            <td>{NumOfCashCollection ? NumOfCashCollection : ""}</td>
-                                            <td>{AmountOfCashCollection ? AmountOfCashCollection : ""}</td>
-                                            <td>{NumOfOtherCollection ? NumOfOtherCollection : ""}</td>
-                                            <td>{AmmountOfOtherCollection ? AmmountOfOtherCollection : ""}</td>
-                                            <td>{NumOfDC ? NumOfDC : ""}</td>
-                                            <td>{amountOfDcConsumer ? amountOfDcConsumer : ""}</td>
+                                            <td>{NumOfCashCollection ? NumOfCashCollection : "0"}</td>
+                                            <td>{AmountOfCashCollection ? AmountOfCashCollection : "0"}</td>
+                                            <td>{NumOfOtherCollection ? NumOfOtherCollection : "0"}</td>
+                                            <td>{AmmountOfOtherCollection ? AmmountOfOtherCollection : "0"}</td>
+                                            <td>{NumOfDC ? NumOfDC : "0"}</td>
+                                            <td>{AmmountOfDC ? AmmountOfDC : "0"}</td>
                                             <td></td>
                                             <td></td>
                                             {

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Users.css';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useAuthState, useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase.init';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
@@ -11,6 +11,8 @@ import { updateProfile } from 'firebase/auth';
 import User from './User';
 const Users = () => {
     const [users, setUsers] = useState([]);
+    const [use] = useAuthState(auth);
+    console.log(use)
     useEffect(() => {
         fetch(`https://pbsofficeinfo.onrender.com/users`)
             .then(res => res.json())
@@ -205,7 +207,7 @@ const Users = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            users?.map(user => <User user={user} key={user._id}></User>)
+                                            use?.designation == 'aje' && users?.map(user => <User user={user} key={user._id}></User>)
                                         }
                                     </tbody>
                                 </table>
