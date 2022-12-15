@@ -93,7 +93,14 @@ const CollectionReports = () => {
                                 <label className="label" style={{ 'color': 'white' }}>জোনালের নাম</label>
                                 <div className="input-group">
                                     <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='2901'>সদর দপ্তর</option>
                                         <option value='2902'>রাঙ্গুনিয়া জোনাল অফিস</option>
+                                        <option value='2903'>ফটিকছড়ি জোনাল অফিস</option>
+                                        <option value='2904'>নোয়াপাড়া জোনাল অফিস</option>
+                                        <option value='2905'>আজাদীবাজার জোনাল অফিস</option>
+                                        <option value='2906'>ধামাইরহাট সাব জোনাল অফিস</option>
+                                        <option value='2907'>দাঁতমারা সাব জোনাল অফিস</option>
+                                        <option value='2908'>নাজিরহাট সাব জোনাল অফিস</option>
                                     </select>
                                 </div>
                             </div>

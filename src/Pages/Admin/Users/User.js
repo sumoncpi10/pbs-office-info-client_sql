@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const User = ({ user }) => {
 
@@ -23,7 +24,9 @@ const User = ({ user }) => {
                     <li className="list-inline-item dropdown">
                         <a className="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i className="bx bx-dots-vertical-rounded"></i></a>
                         <div className="dropdown-menu dropdown-menu-end">
-                            <a className="dropdown-item" href="#">Action</a><a className="dropdown-item" href="#">Another action</a><a className="dropdown-item" href="#">Something else here</a>
+                            <Link className="dropdown-item" to="/posting">Posting</Link>
+                            <a className="dropdown-item" href="#">Another action</a>
+                            <a className="dropdown-item" href="#">Something else here</a>
                         </div>
                     </li>
                 </ul>

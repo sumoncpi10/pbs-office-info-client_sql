@@ -9,7 +9,7 @@ import 'react-day-picker/dist/style.css';
 import auth from '../../../firebase.init';
 import { updateProfile } from 'firebase/auth';
 import useAdmin from '../../../hooks/useAdmin';
-const Profile = () => {
+const Posting = () => {
     (function ($) {
         'use strict';
         try {
@@ -255,4 +255,4 @@ const Profile = () => {
     );
 }
 
-export default Profile;
+export default Posting;
