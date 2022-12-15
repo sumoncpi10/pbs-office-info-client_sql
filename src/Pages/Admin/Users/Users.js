@@ -9,9 +9,11 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import { toast } from 'react-toastify';
 import { updateProfile } from 'firebase/auth';
 import User from './User';
+import useAdmin from '../../../hooks/useAdmin';
 const Users = () => {
     const [users, setUsers] = useState([]);
     const [use] = useAuthState(auth);
+    const [admin] = useAdmin(use);
     console.log(use)
     useEffect(() => {
         fetch(`https://pbsofficeinfo.onrender.com/users`)
@@ -207,7 +209,7 @@ const Users = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            use?.designation == 'aje' && users?.map(user => <User user={user} key={user._id}></User>)
+                                            (admin.designation == 'dgm' || admin.designation == 'gm' || admin.designation == 'admin.designation' || admin.designation == 'je-it' || admin.designation == 'aje-it' || admin.designation == 'agm-it') && users?.map(user => <User user={user} key={user._id}></User>)
                                         }
                                     </tbody>
                                 </table>

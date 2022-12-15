@@ -8,6 +8,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import auth from '../../../firebase.init';
 import { updateProfile } from 'firebase/auth';
+import useAdmin from '../../../hooks/useAdmin';
 const Profile = () => {
     (function ($) {
         'use strict';
@@ -27,14 +28,15 @@ const Profile = () => {
     })(window.jQuery);
 
     const [user, loading, error] = useAuthState(auth);
+    const [admin] = useAdmin(user);
     const [book, setBook] = useState([]);
     const [users, SetUsers] = useState([]);
     const [displayName, setdisplayName] = useState('');
     const [designation, setdesignation] = useState('');
     const [officeInfo, setofficeInfo] = useState([]);
-    // console.log(user)
+    console.log(admin)
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.uid}`)
+        fetch(`http://localhost:5000/user/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -68,7 +70,7 @@ const Profile = () => {
 
         console.log(product);
         // send data to the server
-        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.uid}`, {
+        fetch(`http://localhost:5000/user/${user?.email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -103,6 +105,9 @@ const Profile = () => {
         const newProduct = { photoURL: newBrand, ...rest };
         SetUsers(newProduct);
     }
+    if (loading) {
+        return <p>Loading...</p>;
+    }
     return (
         <div className="wrapper wrapper--w680">
             <div className="card card-4">
@@ -134,6 +139,8 @@ const Profile = () => {
                                         {users?.designation == 'gm' && <option selected value='gm'>GM</option>}
                                         {users?.designation == 'dgm' && <option selected value='dgm'>DGM</option>}
                                         {users?.designation == 'agm' && <option selected value='agm'>AGM</option>}
+                                        {users?.designation == 'agm-it' && <option selected value='agm'>AGM(IT)</option>}
+                                        {users?.designation == 'je-it' && <option selected value='je'>JE(IT)</option>}
                                         {users?.designation == 'je' && <option selected value='je'>JE</option>}
                                         {users?.designation == 'ec' && <option selected value='ec'>EC</option>}
                                         {users?.designation == 'ac' && <option selected value='ac'>Accountant</option>}
@@ -141,7 +148,8 @@ const Profile = () => {
                                         {users?.designation == 'msc' && <option selected value='msc'>MSC</option>}
                                         {users?.designation == 'sc' && <option selected value='sc'>Store Coordinator</option>}
                                         {users?.designation == 'aec' && <option selected value='aec'>AEC</option>}
-                                        {users?.designation == 'aje' && <option value='aje'>AJE</option>}
+                                        {users?.designation == 'aje-it' && <option selected value='aje'>AJE(IT)</option>}
+                                        {users?.designation == 'aje' && <option selected value='aje'>AJE</option>}
                                         {users?.designation == 'bs' && <option selected value='bs'>BS</option>}
                                         {users?.designation == 'mts' && <option selected value='mts'>MTS</option>}
                                         {users?.designation == 'sk' && <option selected value='sk'>Store Keeper</option>}
@@ -162,12 +170,15 @@ const Profile = () => {
                                         <option value='gm'>GM</option>
                                         <option value='dgm'>DGM</option>
                                         <option value='agm'>AGM</option>
+                                        <option selected value='agm-it'>AGM(IT)</option>
+                                        <option selected value='je-it'>JE(IT)</option>
                                         <option value='je'>JE</option>
                                         <option value='ec'>EC</option>
                                         <option value='ac'>Accountant</option>
                                         <option value='puc'>PUC</option>
                                         <option value='msc'>MSC</option>
                                         <option value='sc'>Store Coordinator</option>
+                                        <option value='aje-it'>AJE(IT)</option>
                                         <option value='aje'>AJE</option>
                                         <option value='aec'>AEC</option>
                                         <option value='bs'>BS</option>
@@ -224,14 +235,14 @@ const Profile = () => {
                         <div className="p-t-15">
                             <button className="btn btn--radius-2 btn-primary" type="submit">Submit</button>
                         </div>
-                        <div className="p-t-15">
+                        {/* <div className="p-t-15">
                             <button className="btn btn--radius-2 btn-primary" onClick={async () => {
                                 const success = await updateProfile({ displayName, designation });
                                 if (success) {
                                     alert('Updated profile');
                                 }
                             }} type="submit">Update</button>
-                        </div>
+                        </div> */}
                     </form>
                 </div>
             </div >
