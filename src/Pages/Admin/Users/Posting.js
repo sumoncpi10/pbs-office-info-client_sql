@@ -36,7 +36,7 @@ const Posting = () => {
     const [officeInfo, setofficeInfo] = useState([]);
     console.log(admin)
     useEffect(() => {
-        fetch(`http://localhost:5000/user/${user?.email}`)
+        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -70,7 +70,7 @@ const Posting = () => {
 
         console.log(product);
         // send data to the server
-        fetch(`http://localhost:5000/user/${user?.email}`, {
+        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

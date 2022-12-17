@@ -11,9 +11,16 @@ const firebaseConfig = {
     projectId: process.env.REACT_APP_PROJECTID,
     storageBucket: process.env.REACT_APP_STORAGEBUCKET,
     messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_APPID
-};
+    appId: process.env.REACT_APP_APPID,
 
+    // apiKey: "AIzaSyC1iWp_2nzv4AeXVUbXCsnsH6QpmFNqtTg",
+    // authDomain: "pbs-office-info.firebaseapp.com",
+    // projectId: "pbs-office-info",
+    // storageBucket: "pbs-office-info.appspot.com",
+    // messagingSenderId: "147892014815",
+    // appId: "1:147892014815:web:a3196f0040297cd9db636a"
+};
+console.log(process.env.REACT_APP_MESSAGINGSENDERID);
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
