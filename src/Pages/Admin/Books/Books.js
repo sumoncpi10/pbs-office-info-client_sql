@@ -81,8 +81,8 @@ const Books = () => {
                                             <th scope="col">Zonal</th>
                                             <th scope="col">Complain Center</th>
                                             <th scope="col">Book No</th>
-                                            <th scope="col">Number Of Consumer</th>
-                                            <th scope="col">Number Of DC Consumer</th>
+                                            <th scope="col">Consumer(N)</th>
+                                            <th scope="col">DC Consumer(N)</th>
                                             <th scope="col" style={{ "width": "200px" }}>Action</th>
                                         </tr>
                                     </thead>
