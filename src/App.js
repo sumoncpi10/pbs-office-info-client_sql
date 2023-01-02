@@ -21,10 +21,25 @@ import Offices from './Pages/Admin/Offices/Offices';
 import SignUP from './Pages/Login/SignUP';
 import Profile from './Pages/Admin/Users/Profile';
 import Posting from './Pages/Admin/Users/Posting';
+import Loading from './Pages/Shared/Loading';
+import { useEffect, useState } from 'react';
 
 
 
 function App() {
+  const [u, setU] = useState([]);
+
+  useEffect(() => {
+    fetch(`https://pbsofficeinfo.onrender.com/users`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+        setU(data);
+      })
+  }, []);
+  if (!u) {
+    return <Loading></Loading>
+  }
   return (
     <>
       <div className="page-wrapper bg-gra-02  font-poppins">

@@ -2,8 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const User = ({ user }) => {
-
-
+    const [luser, SetlUser] = useState([]);
+    console.log(user)
+    useEffect(() => {
+        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                SetlUser(data);
+            })
+    }, []);
     return (
         <tr>
             <th scope="row" className="ps-4">

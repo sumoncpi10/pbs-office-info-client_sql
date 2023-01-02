@@ -30,34 +30,44 @@ const Posting = () => {
     const [user, loading, error] = useAuthState(auth);
     const [admin] = useAdmin(user);
     const [book, setBook] = useState([]);
-    const [users, SetUsers] = useState([]);
     const [displayName, setdisplayName] = useState('');
     const [designation, setdesignation] = useState('');
     const [officeInfo, setofficeInfo] = useState([]);
-    console.log(admin)
+    // console.log(admin)
+    const [luser, SetlUser] = useState([]);
+    // console.log(user)
     useEffect(() => {
         fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                SetUsers(data);
+                SetlUser(data);
             })
-    }, [book]);
+    }, []);
+    // useEffect(() => {
+    //     fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             SetlUser(data);
+    //         })
+    // }, [book]);
 
-    const btnSearch = (e) => {
-        e.preventDefault();
-        const textSearch = e.target.textSearch.value;
-        fetch(`https://pbsofficeinfo.onrender.com/book/${textSearch}`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setBook(data);
-            })
-    }
+    // const btnSearch = (e) => {
+    //     e.preventDefault();
+    //     const textSearch = e.target.textSearch.value;
+    //     fetch(`https://pbsofficeinfo.onrender.com/book/${textSearch}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             setBook(data);
+    //         })
+    // }
     const handleUpdateUserInfo = (e) => {
         e.preventDefault();
 
         const displayName = e.target.displayName.value;
+        const zonal = e.target.zonal.value;
         const empPhone = e.target.empPhone.value;
         const photoURL = e.target.photoURL.value;
         const designation = e.target.designation.value;
@@ -65,7 +75,7 @@ const Posting = () => {
 
         // console.log(name, email, password);
         const product = {
-            displayName, empPhone, photoURL, designation, enteredBy
+            displayName, empPhone, photoURL, designation, zonal, enteredBy
         };
 
         console.log(product);
@@ -87,29 +97,29 @@ const Posting = () => {
     }
     const [cdate, setCDate] = useState(new Date());
     const displayNameChange = (e) => {
-        const { displayName, ...rest } = users;
+        const { displayName, ...rest } = luser;
         const newBrand = e.target.value;
         const newProduct = { displayName: newBrand, ...rest };
-        SetUsers(newProduct);
+        SetlUser(newProduct);
         setdisplayName(e.target.value)
     }
     const empPhoneChange = (e) => {
-        const { empPhone, ...rest } = users;
+        const { empPhone, ...rest } = luser;
         const newBrand = e.target.value;
         const newProduct = { empPhone: newBrand, ...rest };
-        SetUsers(newProduct);
+        SetlUser(newProduct);
     }
     const photoURLChange = (e) => {
-        const { photoURL, ...rest } = users;
+        const { photoURL, ...rest } = luser;
         const newBrand = e.target.value;
         const newProduct = { photoURL: newBrand, ...rest };
-        SetUsers(newProduct);
+        SetlUser(newProduct);
     }
     if (loading) {
         return <p>Loading...</p>;
     }
     let disabled = true;
-    if (admin?.designation == "agm-it" || admin?.designation == "je-it" || admin?.designation == "aje-it" || admin?.designation == "dgm" || admin?.designation == "gm") {
+    if (admin?.designation == "agm-it" || admin?.designation == "aje" || admin?.designation == "je-it" || admin?.designation == "aje-it" || admin?.designation == "dgm" || admin?.designation == "gm") {
         disabled = false;
     }
     return (
@@ -117,7 +127,7 @@ const Posting = () => {
             <div className="card card-4">
 
                 <div className="card-body">
-                    <h2 className="title">আপনার প্রোফাইল হালনাগাদ করুন</h2>
+                    <h2 className="title">প্রোফাইল হালনাগাদ করুন/পোষ্টিং প্রদান করুন</h2>
                     {/* <div className="container-fluid p-2 mb-3">
                         <form onSubmit={btnSearch} className="d-flex" role="search">
                             <input name='textSearch' className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -127,10 +137,47 @@ const Posting = () => {
 
                     <form method="POST" onSubmit={handleUpdateUserInfo}>
                         <div className="row row-space">
+                            <div className="col-2 ">
+                                <div className="input-group">
+                                    <label className="label">পবিসের নাম</label>
+                                    {/* <input className="input--style-4" type="email" name="email" /> */}
+                                    <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='29'>চট্টগ্রাম পবিস-২</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-2">
+                                <label className="label">পোষ্টিং অফিস প্রদান করুন</label>
+                                <div className="input-group">
+                                    {/* <input className="input--style-4" type="email" name="email" /> */}
+                                    <select disabled={disabled} name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        {luser.zonal == '2901' && <option value='2901' selected>সদর দপ্তর</option>}
+                                        {luser.zonal == '2903' && <option value='2903' selected>ফটিকছড়ি জোনাল অফিস</option>}
+                                        {luser.zonal == '2902' && <option value='2902' selected>রাঙ্গুনিয়া জোনাল অফিস</option>}
+                                        {luser.zonal == '2904' && <option value='2904' selected>নোয়াপাড়া জোনাল অফিস</option>}
+                                        {luser.zonal == '2905' && <option value='2905' selected>আজাদীবাজার জোনাল অফিস</option>}
+                                        {luser.zonal == '2906' && <option value='2906' selected>ধামাইরহাট সাব জোনাল অফিস</option>}
+                                        {luser.zonal == '2907' && <option value='2907' selected>দাঁতমারা সাব জোনাল অফিস</option>}
+                                        {luser.zonal == '2908' && <option value='2908' selected>নাজিরহাট সাব জোনাল অফিস</option>}
+
+                                        <option value='2902' >রাঙ্গুনিয়া জোনাল অফিস</option>
+                                        <option value='2901' >সদর দপ্তর</option>
+                                        <option value='2903' >ফটিকছড়ি জোনাল অফিস</option>
+                                        <option value='2904' >নোয়াপাড়া জোনাল অফিস</option>
+                                        <option value='2905' >আজাদীবাজার জোনাল অফিস</option>
+                                        <option value='2906' >ধামাইরহাট সাব জোনাল অফিস</option>
+                                        <option value='2907' >দাঁতমারা সাব জোনাল অফিস</option>
+                                        <option value='2908' >নাজিরহাট সাব জোনাল অফিস</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">নাম</label>
-                                    <input value={users?.displayName} onChange={displayNameChange} className="input--style-4" type="text" name="displayName" />
+                                    <input value={luser.displayName} onChange={displayNameChange} className="input--style-4" type="text" name="displayName" />
                                 </div>
                             </div>
                             <div className="col-2">
@@ -138,39 +185,39 @@ const Posting = () => {
                                 <div className="input-group">
                                     <select disabled={disabled} name="designation" onChange={(e) => setdesignation(e.target.value)} className="" style={{ "width": "550px", "lineHeight": "50px" }} >
                                         {/* {
-                                             users?.map(u => <option key={u._id} sele selected  value={u._id}>{u.displayName + ', ' + u.designation}</option>)
+                                             luser.map(u => <option key={u._id} sele selected  value={u._id}>{u.displayName + ', ' + u.designation}</option>)
                                         } */}
-                                        {users?.designation == 'gm' && <option selected value='gm'>GM</option>}
-                                        {users?.designation == 'dgm' && <option selected value='dgm'>DGM</option>}
-                                        {users?.designation == 'agm' && <option selected value='agm'>AGM</option>}
-                                        {users?.designation == 'agm-it' && <option selected value='agm'>AGM(IT)</option>}
-                                        {users?.designation == 'je-it' && <option selected value='je'>JE(IT)</option>}
-                                        {users?.designation == 'je' && <option selected value='je'>JE</option>}
-                                        {users?.designation == 'ec' && <option selected value='ec'>EC</option>}
-                                        {users?.designation == 'ac' && <option selected value='ac'>Accountant</option>}
-                                        {users?.designation == 'puc' && <option selected value='puc'>PUC</option>}
-                                        {users?.designation == 'msc' && <option selected value='msc'>MSC</option>}
-                                        {users?.designation == 'sc' && <option selected value='sc'>Store Coordinator</option>}
-                                        {users?.designation == 'aec' && <option selected value='aec'>AEC</option>}
-                                        {users?.designation == 'aje-it' && <option selected value='aje'>AJE(IT)</option>}
-                                        {users?.designation == 'aje' && <option selected value='aje'>AJE</option>}
-                                        {users?.designation == 'bs' && <option selected value='bs'>BS</option>}
-                                        {users?.designation == 'mts' && <option selected value='mts'>MTS</option>}
-                                        {users?.designation == 'sk' && <option selected value='sk'>Store Keeper</option>}
-                                        {users?.designation == 'aac' && <option selected value='aac'>Assistant Accountant</option>}
-                                        {users?.designation == 'cash' && <option selected value='cash'>Cashier</option>}
-                                        {users?.designation == 'co' && <option selected value='co'>Computer Operator</option>}
-                                        {users?.designation == 'lt' && <option selected value='lt'>LT</option>}
-                                        {users?.designation == 'wi' && <option selected value='wi'>Wiring Inspector</option>}
-                                        {users?.designation == 'ba' && <option selected value='ba'>Billing Assistant</option>}
-                                        {users?.designation == 'acash' && <option selected value='acash'>Assistant Cashier</option>}
-                                        {users?.designation == 'deo' && <option selected value='deo'>DEO</option>}
-                                        {users?.designation == 'lm1' && <option selected value='lm1'>LM-1</option>}
-                                        {users?.designation == 'mt' && <option selected value='mt'>MT</option>}
-                                        {users?.designation == 'lm2' && <option selected value='lm2'>LM-2</option>}
-                                        {users?.designation == 'lc' && <option selected value='lc'>Line Crew</option>}
-                                        {users?.designation == 'mrcm' && <option selected value='mrcm'>MRCM</option>}
-                                        {users?.designation == 'oh' && <option selected value='oh'>OH</option>}
+                                        {luser.designation == 'gm' && <option selected value='gm'>GM</option>}
+                                        {luser.designation == 'dgm' && <option selected value='dgm'>DGM</option>}
+                                        {luser.designation == 'agm' && <option selected value='agm'>AGM</option>}
+                                        {luser.designation == 'agm-it' && <option selected value='agm'>AGM(IT)</option>}
+                                        {luser.designation == 'je-it' && <option selected value='je'>JE(IT)</option>}
+                                        {luser.designation == 'je' && <option selected value='je'>JE</option>}
+                                        {luser.designation == 'ec' && <option selected value='ec'>EC</option>}
+                                        {luser.designation == 'ac' && <option selected value='ac'>Accountant</option>}
+                                        {luser.designation == 'puc' && <option selected value='puc'>PUC</option>}
+                                        {luser.designation == 'msc' && <option selected value='msc'>MSC</option>}
+                                        {luser.designation == 'sc' && <option selected value='sc'>Store Coordinator</option>}
+                                        {luser.designation == 'aec' && <option selected value='aec'>AEC</option>}
+                                        {luser.designation == 'aje-it' && <option selected value='aje'>AJE(IT)</option>}
+                                        {luser.designation == 'aje' && <option selected value='aje'>AJE</option>}
+                                        {luser.designation == 'bs' && <option selected value='bs'>BS</option>}
+                                        {luser.designation == 'mts' && <option selected value='mts'>MTS</option>}
+                                        {luser.designation == 'sk' && <option selected value='sk'>Store Keeper</option>}
+                                        {luser.designation == 'aac' && <option selected value='aac'>Assistant Accountant</option>}
+                                        {luser.designation == 'cash' && <option selected value='cash'>Cashier</option>}
+                                        {luser.designation == 'co' && <option selected value='co'>Computer Operator</option>}
+                                        {luser.designation == 'lt' && <option selected value='lt'>LT</option>}
+                                        {luser.designation == 'wi' && <option selected value='wi'>Wiring Inspector</option>}
+                                        {luser.designation == 'ba' && <option selected value='ba'>Billing Assistant</option>}
+                                        {luser.designation == 'acash' && <option selected value='acash'>Assistant Cashier</option>}
+                                        {luser.designation == 'deo' && <option selected value='deo'>DEO</option>}
+                                        {luser.designation == 'lm1' && <option selected value='lm1'>LM-1</option>}
+                                        {luser.designation == 'mt' && <option selected value='mt'>MT</option>}
+                                        {luser.designation == 'lm2' && <option selected value='lm2'>LM-2</option>}
+                                        {luser.designation == 'lc' && <option selected value='lc'>Line Crew</option>}
+                                        {luser.designation == 'mrcm' && <option selected value='mrcm'>MRCM</option>}
+                                        {luser.designation == 'oh' && <option selected value='oh'>OH</option>}
                                         <option value='gm'>GM</option>
                                         <option value='dgm'>DGM</option>
                                         <option value='agm'>AGM</option>
@@ -212,13 +259,13 @@ const Posting = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ইমেইল</label>
-                                    <input name='email' className="input--style-4" type="email" value={users?.email} disabled />
+                                    <input name='email' className="input--style-4" type="email" value={luser.email} disabled />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">মোবাইল</label>
-                                    <input onChange={empPhoneChange} name='empPhone' className="input--style-4" type="text" value={users?.empPhone} />
+                                    <input onChange={empPhoneChange} name='empPhone' className="input--style-4" type="text" value={luser.empPhone} />
                                 </div>
                             </div>
                         </div>
@@ -226,13 +273,13 @@ const Posting = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ছবি (লিঙ্ক)</label>
-                                    <input onChange={photoURLChange} name='photoURL' className="input--style-4" type="text" value={users?.photoURL} />
+                                    <input onChange={photoURLChange} name='photoURL' className="input--style-4" type="text" value={luser.photoURL} />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">যাচাইকৃত</label>
-                                    <input name='emailVerified' className="input--style-4" type="text" value={users?.emailVerified} disabled />
+                                    <input name='emailVerified' className="input--style-4" type="text" value={luser.emailVerified} disabled />
                                 </div>
                             </div>
                         </div>
