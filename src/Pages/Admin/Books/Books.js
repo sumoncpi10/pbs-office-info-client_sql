@@ -68,7 +68,7 @@ const Books = () => {
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="">
+                        <div class="col-lg-12">
                             <div class="table-responsive">
                                 <table class="table project-list-table table-nowrap align-middle table-borderless">
                                     <thead>
