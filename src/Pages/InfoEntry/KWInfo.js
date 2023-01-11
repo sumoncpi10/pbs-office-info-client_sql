@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-const DNPInfo = () => {
+const KWInfo = () => {
     (function ($) {
         'use strict';
         try {
@@ -65,8 +65,8 @@ const DNPInfo = () => {
     }
     const handleAddDNPInfo = (e) => {
         e.preventDefault();
-        const cdate = e.target.cdate.value;
-        const collectedBy = e.target.collectedBy.value;
+        // const cdate = e.target.cdate.value;
+        // const collectedBy = e.target.collectedBy.value;
         const pbs = e.target.pbs.value;
         const zonal = e.target.zonal.value;
         const complainCenter = e.target.complainCenter.value;
@@ -76,26 +76,18 @@ const DNPInfo = () => {
         const numberOfConsumer = e.target.numberOfConsumer.value;
         const empName = e.target.empName.value;
         const empDesignation = e.target.empDesignation.value;
-        const numberOfDcConsumer = e.target.numberOfDcConsumer.value;
-        const amountOfDcConsumer = e.target.amountOfDcConsumer.value;
-        const Days90UpConsumerMonthStart = e.target.Days90UpConsumerMonthStart.value;
-        const Days90UpConsumerMonthEnd = e.target.Days90UpConsumerMonthEnd.value;
-        const NumOfCashCollection = e.target.NumOfCashCollection.value;
-        const AmountOfCashCollection = e.target.AmountOfCashCollection.value;
-        const NumOfOtherCollection = e.target.NumOfOtherCollection.value;
-        const AmmountOfOtherCollection = e.target.AmmountOfOtherCollection.value;
-        const NumOfDC = e.target.NumOfDC.value;
-        const AmmountOfDC = e.target.AmmountOfDC.value;
+        const kwh = e.target.kwh.value;
+        const kwhAmmount = e.target.kwhAmmount.value;
         const enteredBy = user?.email;
 
         // console.log(name, email, password);
         const product = {
-            cdate, collectedBy, pbs, zonal, complainCenter, month, year, bookNo, numberOfConsumer, empName, empDesignation, numberOfDcConsumer, amountOfDcConsumer, Days90UpConsumerMonthStart, Days90UpConsumerMonthEnd, NumOfCashCollection, AmountOfCashCollection, NumOfOtherCollection, AmmountOfOtherCollection, NumOfDC, AmmountOfDC, today, enteredBy
+            pbs, zonal, complainCenter, month, year, bookNo, numberOfConsumer, empName, empDesignation, kwh, kwhAmmount, today, enteredBy
         };
         console.log(product);
         // send data to the server
 
-        fetch('https://pbsofficeinfo.onrender.com/cashAdd', {
+        fetch('https://pbsofficeinfo.onrender.com/KWHAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -107,7 +99,7 @@ const DNPInfo = () => {
                 // console.log('success', data);
                 e.target.reset();
                 setBook("");
-                toast("DNP Update Successfully!");
+                toast("KWH ADD Successfully!");
             })
     }
     const [cdate, setCDate] = useState(new Date());
@@ -116,7 +108,7 @@ const DNPInfo = () => {
             <div className="card card-4">
 
                 <div className="card-body">
-                    <h2 className="title">বকেয়া আদায়ের তথ্য</h2>
+                    <h2 className="title">KWH তথ্য</h2>
                     <div className="container-fluid p-2 mb-3">
                         <form onSubmit={btnSearch} className="d-flex" role="search">
                             <input name='textSearch' className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
@@ -153,7 +145,7 @@ const DNPInfo = () => {
                                 <p>You Have selected:{format(cdate, 'PP')}</p>
                             </div>
                         </div> */}
-                        <div className="row row-space">
+                        {/* <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">আদায়ের তারিখ</label>
@@ -167,16 +159,10 @@ const DNPInfo = () => {
                                         {
                                             users?.map(u => <option key={u._id} value={u._id}>{u.displayName + ', ' + u.designation}</option>)
                                         }
-                                        {/* {book?.complainCenter == "290200" && <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>}
-                                        {book?.complainCenter == "290201" && <option value='290201'>গোচরা</option>}
-                                        {book?.complainCenter == "290202" && <option value='290202'>শিলক</option>}
-                                        {book?.complainCenter == "290204" && <option value='290204'>সরবভাটা</option>}
-                                        {book?.complainCenter == "290205" && <option value='290205'>লিচুবাগান</option>}
-                                        {book?.complainCenter == "290206" && <option value='290206'>পদুয়া</option>} */}
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="row row-space">
                             <div className="col-2 collapse">
                                 <div className="input-group">
@@ -300,7 +286,7 @@ const DNPInfo = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row row-space">
+                        {/* <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ডিসি গ্রাহকের সংখ্যা</label>
@@ -327,32 +313,32 @@ const DNPInfo = () => {
                                     <input className="input--style-4" type="text" name="Days90UpConsumerMonthEnd" value={book?.Days90UpConsumerMonthEnd} disabled />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
-                                    <label className="label">নগদ আদায় সংখ্যা</label>
-                                    <input className="input--style-4" type="text" name="NumOfCashCollection" required />
+                                    <label className="label">কিলোওয়াট</label>
+                                    <input className="input--style-4" type="text" name="kwh" required />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
-                                    <label className="label">নগদ আদায় টাকা</label>
-                                    <input className="input--style-4" type="text" name="AmountOfCashCollection" required />
+                                    <label className="label">টাকা</label>
+                                    <input className="input--style-4" type="text" name="kwhAmmount" required />
                                 </div>
                             </div>
                         </div>
-                        <div className="row row-space">
+                        {/* <div className="row row-space">
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">অন্যান্য আদায় সংখ্যা</label>
-                                    <input className="input--style-4" type="text" name="NumOfOtherCollection" required />
+                                    <input className="input--style-4" type="text" name="NumOfOtherCollection" />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">অন্যান্য আদায় টাকা</label>
-                                    <input className="input--style-4" type="text" name="AmmountOfOtherCollection" required />
+                                    <input className="input--style-4" type="text" name="AmmountOfOtherCollection" />
                                 </div>
                             </div>
                         </div>
@@ -360,16 +346,16 @@ const DNPInfo = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ডিসি সংখ্যা</label>
-                                    <input className="input--style-4" type="text" name="NumOfDC" required />
+                                    <input className="input--style-4" type="text" name="NumOfDC" />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ডিসি টাকা</label>
-                                    <input className="input--style-4" type="text" name="AmmountOfDC" required />
+                                    <input className="input--style-4" type="text" name="AmmountOfDC" />
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <div className="p-t-15">
                             <button className="btn btn--radius-2 btn-primary" type="submit">Submit</button>
@@ -382,4 +368,4 @@ const DNPInfo = () => {
     );
 }
 
-export default DNPInfo;
+export default KWInfo;

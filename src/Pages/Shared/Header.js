@@ -29,6 +29,7 @@ const Header = () => {
                             </Link>
                             <ul className="dropdown-menu">
                                 <li><Link className="dropdown-item" to="/dnp-info">DNP Information</Link></li>
+                                <li><Link className="dropdown-item" to="/kw-info">KWH Information</Link></li>
                                 {/* <li><Link className="dropdown-item" to="/">Another action</Link></li> */}
                                 {/* <li><hr className="dropdown-divider" /></li> */}
                                 {/* <li><Link className="dropdown-item" to="/">Something else here</Link></li> */}

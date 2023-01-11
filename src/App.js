@@ -23,6 +23,7 @@ import Profile from './Pages/Admin/Users/Profile';
 import Posting from './Pages/Admin/Users/Posting';
 import Loading from './Pages/Shared/Loading';
 import { useEffect, useState } from 'react';
+import KWInfo from './Pages/InfoEntry/KWInfo';
 
 
 
@@ -47,6 +48,7 @@ function App() {
         <Routes>
           <Route path="/" element={< Home />}></Route>
           <Route path="/dnp-info" element={<RequireAuth><DNPInfo /></RequireAuth>}></Route>
+          <Route path="/kw-info" element={<RequireAuth><KWInfo /></RequireAuth>}></Route>
           <Route path="/book-info" element={<RequireAuth><BookInfo /></RequireAuth>}></Route>
           <Route path="/books/:id" element={<RequireAuth><UpdateBookInfo /></RequireAuth>}></Route>
           <Route path="/collection-info-report" element={<RequireAuth><CollectionReports /></RequireAuth>}></Route>
