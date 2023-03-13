@@ -21,7 +21,7 @@ const useAdmin = user => {
             fetch(`https://pbsofficeinfo.onrender.com/user/${email}`)
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    // console.log(data);
                     setAdmin(data);
                     setAdminLoading(false);
                 })

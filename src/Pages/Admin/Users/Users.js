@@ -11,12 +11,13 @@ import { updateProfile } from 'firebase/auth';
 import User from './User';
 import useAdmin from '../../../hooks/useAdmin';
 const Users = () => {
+    const [luser, setLUser] = useState([]);
     const [users, setUsers] = useState([]);
     const [use] = useAuthState(auth);
     const [admin] = useAdmin(use);
-    console.log(use)
+    // console.log(use);
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/users`)
+        fetch(`http://localhost:5000/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -24,6 +25,14 @@ const Users = () => {
 
             })
     }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/user/${use?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                setLUser(data);
+            })
+    }, [use.email]);
     const ok = (e) => {
         e.preventDefault();
         (function ($) {
@@ -72,23 +81,29 @@ const Users = () => {
     const createUser = async (e) => {
         e.preventDefault();
         const displayName = e.target.name.value;
-        const designation = e.target.designation.value;
+        const trg_id = e.target.trg_id.value;
         const email = e.target.email.value;
         const password = e.target.password.value;
+        const designation = e.target.designation.value;
+        const phone = e.target.phone.value;
+        const pbs_code = luser?.pbs_code;
+        const zonal_code = luser?.zonal_code;
+        const add_by = luser?.email;
         const user = {
-            displayName, designation, email, password
+            displayName, trg_id, email, password, designation, phone, pbs_code, zonal_code, add_by
         };
 
         const newuser = await users?.find(user => user.email == email)
+        console.log(user)
         console.log(newuser)
         if (newuser) {
             toast("User Already Exists !");
             // navigate(from, { replace: true });
         }
-        else if (email && password) {
+        else if (luser && email && password) {
             const rr = createUserWithEmailAndPassword(email, password);
             if (rr) {
-                fetch('https://pbsofficeinfo.onrender.com/userAdd', {
+                fetch('http://localhost:5000/userAdd', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -103,6 +118,24 @@ const Users = () => {
                         // navigate(from, { replace: true });
                     })
             }
+        }
+        else if (luser && trg_id && password) {
+
+            fetch('http://localhost:5000/userAdd', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    // console.log('success', data);
+                    toast("User Create Successfully!");
+                    e.target.reset();
+                    // navigate(from, { replace: true });
+                })
+
         }
     }
 
@@ -126,13 +159,19 @@ const Users = () => {
                                             <input name="name" type="text" className="form-control" placeholder="Name" required />
                                         </div>
                                         <div className="form-group">
-                                            <input name='designation' type="text" className="form-control" placeholder="Designation" required />
+                                            <input name='trg_id' type="text" className="form-control" placeholder="Training ID" required />
                                         </div>
                                         <div className="form-group">
-                                            <input name='email' type="email" className="form-control" placeholder="Email address" required />
+                                            <input name='email' type="email" className="form-control" placeholder="Email address" />
                                         </div>
                                         <div className="form-group">
                                             <input name='password' type="password" className="form-control" placeholder="Password" required />
+                                        </div>
+                                        <div className="form-group">
+                                            <input name='designation' type="text" className="form-control" placeholder="Designation" required />
+                                        </div>
+                                        <div className="form-group">
+                                            <input name='phone' type="number" className="form-control" placeholder="Phone" required />
                                         </div>
                                         <div className="form-group">
                                             <button type="submit" className="form-control btn btn-primary rounded submit px-3">Create</button>
@@ -209,7 +248,7 @@ const Users = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            (admin.designation == 'dgm' || admin.designation == 'gm' || admin.designation == 'admin.designation' || admin.designation == 'je-it' || admin.designation == 'aje-it' || admin.designation == 'agm-it') && users?.map(user => <User user={user} key={user._id}></User>)
+                                            (admin.designation == 'dgm' || admin.designation == 'gm' || admin.designation == 'admin.designation' || admin.designation == 'je-it' || admin.designation == 'aje-it' || admin.designation == 'agm-it') && users?.map(user => <User user={user} key={user.id}></User>)
                                         }
                                     </tbody>
                                 </table>

@@ -78,12 +78,42 @@ const DNPInfo = () => {
     })(window.jQuery);
 
     const [users, setUsers] = useState([]);
+    // const [pbs, setPbss] = useState([]);
+    const [zonals, setZonals] = useState([]);
+    const [ccs, setCcs] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
         fetch(`http://localhost:5000/users`)
             .then(res => res.json())
             .then(data => {
                 setUsers(data);
+                console.log(data);
+
+            })
+    }, []);
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/pbss`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setPbss(data);
+    //             console.log(data);
+
+    //         })
+    // }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/zonals`)
+            .then(res => res.json())
+            .then(data => {
+                setZonals(data);
+                console.log(data);
+
+            })
+    }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/ccs`)
+            .then(res => res.json())
+            .then(data => {
+                setCcs(data);
                 console.log(data);
 
             })
@@ -145,7 +175,7 @@ const DNPInfo = () => {
                                     <label className="label">পবিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='29'>চট্টগ্রাম পবিস-২</option>
+                                        <option value='29'>Chittagong PBS-2</option>
                                     </select>
                                 </div>
                             </div>
@@ -154,7 +184,10 @@ const DNPInfo = () => {
                                     <label className="label">অফিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
                                     <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='2902'>রাঙ্গুনিয়া জোনাল অফিস</option>
+                                        {
+                                            zonals.map(z => <option key={z.id} value={z.zonal_code}>{z.zonal_name}</option>)
+                                        }
+
                                     </select>
                                 </div>
                             </div>
@@ -166,12 +199,9 @@ const DNPInfo = () => {
                                 <label className="label">অভিযোগ কেন্দ্র</label>
                                 <div className="input-group">
                                     <select name="complainCenter" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>
-                                        <option value='290205'>লিচুবাগান</option>
-                                        <option value='290206'>পদুয়া</option>
-                                        <option value='290204'>সরবভাটা</option>
-                                        <option value='290201'>গোচরা</option>
-                                        <option value='290202'>শিলক</option>
+                                        {
+                                            ccs.map(z => <option key={z.id} value={z.cc_code}>{z.cc_name}</option>)
+                                        }
                                     </select>
                                     {/* <div className="select-dropdown"></div> */}
 
