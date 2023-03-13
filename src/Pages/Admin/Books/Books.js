@@ -5,7 +5,7 @@ const Books = () => {
     const [bookInfo, setBookInfo] = useState([]);
     const navigate = useNavigate();
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/dnp`)
+        fetch(`http://localhost:5000/books`)
             .then(res => res.json())
             .then(data => {
                 setBookInfo(data);
@@ -76,8 +76,7 @@ const Books = () => {
                                             <th scope="col" class="ps-4" style={{ "width": "50px" }}>
                                                 <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
                                             </th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Position</th>
+                                            <th scope="col">Name & Position</th>
                                             <th scope="col">Zonal</th>
                                             <th scope="col">Complain Center</th>
                                             <th scope="col">Book No</th>
@@ -93,10 +92,9 @@ const Books = () => {
                                                     <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
                                                 </th>
                                                 {/* <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">{book?.empName}</a></td> */}
-                                                <td><a href="#" class="text-body">{book?.empName}</a></td>
-                                                <td><span class="badge badge-soft-success mb-0">{book?.empDesignation}</span></td>
-                                                <td>{book?.zonal}</td>
-                                                <td>{book?.complainCenter}</td>
+                                                <td><a href="#" class="text-body">{book?.displayName}</a><span class="badge badge-soft-success mb-0">{book?.designation}</span></td>
+                                                <td>{book?.zonal_name}</td>
+                                                <td>{book?.cc_name}</td>
                                                 <td>{book?.bookNo}</td>
                                                 <td>{book?.numberOfConsumer}</td>
                                                 <td>{book?.numberOfDcConsumer}</td>
