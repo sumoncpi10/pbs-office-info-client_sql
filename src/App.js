@@ -58,7 +58,7 @@ function App() {
           <Route path="/offices" element={<RequireAuth><Offices></Offices></RequireAuth>}></Route>
           <Route path="/addUser" element={<RequireAuth><AddUser /></RequireAuth>}></Route>
           <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>}></Route>
-          <Route path="/posting" element={<RequireAuth><Posting /></RequireAuth>}></Route>
+          <Route path="/posting/:id" element={<RequireAuth><Posting /></RequireAuth>}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<SignUP />}></Route>
         </Routes>

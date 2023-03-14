@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 const User = ({ user }) => {
     const [luser, SetlUser] = useState([]);
+    const navigate = useNavigate();
     // console.log(user)
     // useEffect(() => {
     //     fetch(`http://localhost:5000/user/${user?.trg_id}`)
@@ -12,6 +13,13 @@ const User = ({ user }) => {
     //             SetlUser(data);
     //         })
     // }, []);
+    const EmpPosting = id => {
+        const proceed = window.confirm('Are You Sure You Want To Update The Book!');
+        console.log(id, proceed);
+        if (proceed) {
+            navigate(`/posting/${id}`);
+        }
+    }
     return (
         <tr>
             <th scope="row" className="ps-4">
@@ -32,7 +40,7 @@ const User = ({ user }) => {
                     <li className="list-inline-item dropdown">
                         <a className="text-muted dropdown-toggle font-size-18 px-2" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true"><i className="bx bx-dots-vertical-rounded"></i></a>
                         <div className="dropdown-menu dropdown-menu-end">
-                            <Link className="dropdown-item" to="/posting">Posting</Link>
+                            <button onClick={() => EmpPosting(user?.id)} className="dropdown-item" p>Posting</button>
                             <a className="dropdown-item" href="#">Another action</a>
                             <a className="dropdown-item" href="#">Something else here</a>
                         </div>

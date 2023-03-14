@@ -9,6 +9,7 @@ import 'react-day-picker/dist/style.css';
 import auth from '../../../firebase.init';
 import { updateProfile } from 'firebase/auth';
 import useAdmin from '../../../hooks/useAdmin';
+import { useParams } from 'react-router-dom';
 const Posting = () => {
     (function ($) {
         'use strict';
@@ -26,22 +27,42 @@ const Posting = () => {
             console.log(err);
         }
     })(window.jQuery);
-
+    const { id } = useParams();
     const [user, loading, error] = useAuthState(auth);
     const [admin] = useAdmin(user);
     const [book, setBook] = useState([]);
     const [displayName, setdisplayName] = useState('');
     const [designation, setdesignation] = useState('');
     const [officeInfo, setofficeInfo] = useState([]);
+    const [zonals, setZonals] = useState([]);
+    const [ccs, setCcs] = useState([]);
     // console.log(admin)
     const [luser, SetlUser] = useState([]);
     // console.log(user)
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
+        fetch(`http://localhost:5000/userId/${id}`)
             .then(res => res.json())
             .then(data => {
+                console.log(data[0]);
+                SetlUser(data[0]);
+            })
+    }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/zonals`)
+            .then(res => res.json())
+            .then(data => {
+                setZonals(data);
                 console.log(data);
-                SetlUser(data);
+
+            })
+    }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/ccs`)
+            .then(res => res.json())
+            .then(data => {
+                setCcs(data);
+                console.log(data);
+
             })
     }, []);
     // useEffect(() => {
@@ -66,21 +87,24 @@ const Posting = () => {
     const handleUpdateUserInfo = (e) => {
         e.preventDefault();
 
+        const pbs_code = e.target.pbs_code.value;
+        const zonal_code = e.target.zonal_code.value;
         const displayName = e.target.displayName.value;
-        const zonal = e.target.zonal.value;
-        const empPhone = e.target.empPhone.value;
-        const photoURL = e.target.photoURL.value;
         const designation = e.target.designation.value;
-        const enteredBy = user?.email;
+        const email = e.target.email.value;
+        const phone = e.target.phone.value;
+        const photoURL = e.target.photoURL.value;
+        const trg_id = e.target.trg_id.value;
+        const posted_by = user?.email;
 
         // console.log(name, email, password);
         const product = {
-            displayName, empPhone, photoURL, designation, zonal, enteredBy
+            pbs_code, zonal_code, displayName, designation, email, phone, photoURL, trg_id, posted_by
         };
 
         console.log(product);
         // send data to the server
-        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`, {
+        fetch(`http://localhost:5000/userPosting/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -103,16 +127,28 @@ const Posting = () => {
         SetlUser(newProduct);
         setdisplayName(e.target.value)
     }
-    const empPhoneChange = (e) => {
-        const { empPhone, ...rest } = luser;
+    const emailChange = (e) => {
+        const { email, ...rest } = luser;
         const newBrand = e.target.value;
-        const newProduct = { empPhone: newBrand, ...rest };
+        const newProduct = { email: newBrand, ...rest };
+        SetlUser(newProduct);
+    }
+    const empPhoneChange = (e) => {
+        const { phone, ...rest } = luser;
+        const newBrand = e.target.value;
+        const newProduct = { phone: newBrand, ...rest };
         SetlUser(newProduct);
     }
     const photoURLChange = (e) => {
         const { photoURL, ...rest } = luser;
         const newBrand = e.target.value;
         const newProduct = { photoURL: newBrand, ...rest };
+        SetlUser(newProduct);
+    }
+    const trgIdChange = (e) => {
+        const { trg_id, ...rest } = luser;
+        const newBrand = e.target.value;
+        const newProduct = { trg_id: newBrand, ...rest };
         SetlUser(newProduct);
     }
     if (loading) {
@@ -141,8 +177,8 @@ const Posting = () => {
                                 <div className="input-group">
                                     <label className="label">পবিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
-                                    <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='29'>চট্টগ্রাম পবিস-২</option>
+                                    <select name="pbs_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='29'>Chittagong PBS-2</option>
                                     </select>
                                 </div>
                             </div>
@@ -150,24 +186,10 @@ const Posting = () => {
                                 <label className="label">পোষ্টিং অফিস প্রদান করুন</label>
                                 <div className="input-group">
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
-                                    <select disabled={disabled} name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        {luser.zonal == '2901' && <option value='2901' selected>সদর দপ্তর</option>}
-                                        {luser.zonal == '2903' && <option value='2903' selected>ফটিকছড়ি জোনাল অফিস</option>}
-                                        {luser.zonal == '2902' && <option value='2902' selected>রাঙ্গুনিয়া জোনাল অফিস</option>}
-                                        {luser.zonal == '2904' && <option value='2904' selected>নোয়াপাড়া জোনাল অফিস</option>}
-                                        {luser.zonal == '2905' && <option value='2905' selected>আজাদীবাজার জোনাল অফিস</option>}
-                                        {luser.zonal == '2906' && <option value='2906' selected>ধামাইরহাট সাব জোনাল অফিস</option>}
-                                        {luser.zonal == '2907' && <option value='2907' selected>দাঁতমারা সাব জোনাল অফিস</option>}
-                                        {luser.zonal == '2908' && <option value='2908' selected>নাজিরহাট সাব জোনাল অফিস</option>}
-
-                                        <option value='2902' >রাঙ্গুনিয়া জোনাল অফিস</option>
-                                        <option value='2901' >সদর দপ্তর</option>
-                                        <option value='2903' >ফটিকছড়ি জোনাল অফিস</option>
-                                        <option value='2904' >নোয়াপাড়া জোনাল অফিস</option>
-                                        <option value='2905' >আজাদীবাজার জোনাল অফিস</option>
-                                        <option value='2906' >ধামাইরহাট সাব জোনাল অফিস</option>
-                                        <option value='2907' >দাঁতমারা সাব জোনাল অফিস</option>
-                                        <option value='2908' >নাজিরহাট সাব জোনাল অফিস</option>
+                                    <select disabled={disabled} name="zonal_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        {
+                                            zonals.map(z => <option selected={z.zonal_code == luser.zonal_code} value={z.zonal_code}>{z.zonal_name}</option>)
+                                        }
 
                                     </select>
                                 </div>
@@ -259,13 +281,13 @@ const Posting = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">ইমেইল</label>
-                                    <input name='email' className="input--style-4" type="email" value={luser.email} disabled />
+                                    <input onChange={emailChange} name='email' className="input--style-4" type="email" value={luser.email} />
                                 </div>
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">মোবাইল</label>
-                                    <input onChange={empPhoneChange} name='empPhone' className="input--style-4" type="text" value={luser.empPhone} />
+                                    <input onChange={empPhoneChange} name='phone' className="input--style-4" type="text" value={luser.phone} />
                                 </div>
                             </div>
                         </div>
@@ -278,8 +300,8 @@ const Posting = () => {
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
-                                    <label className="label">যাচাইকৃত</label>
-                                    <input name='emailVerified' className="input--style-4" type="text" value={luser.emailVerified} disabled />
+                                    <label className="label">প্রশিক্ষণ আইডি</label>
+                                    <input onChange={trgIdChange} name='trg_id' className="input--style-4" type="text" value={luser.trg_id} disabled />
                                 </div>
                             </div>
                         </div>

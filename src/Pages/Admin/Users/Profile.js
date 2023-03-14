@@ -31,18 +31,21 @@ const Profile = () => {
     const [admin] = useAdmin(user);
     const [book, setBook] = useState([]);
     const [users, SetUsers] = useState([]);
+    const [luser, setLUser] = useState([]);
     const [displayName, setdisplayName] = useState('');
     const [designation, setdesignation] = useState('');
     const [officeInfo, setofficeInfo] = useState([]);
-    console.log(admin)
+    console.log(admin);
+    console.log(user.email);
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
+        fetch(`http://localhost:5000/user/${user?.email}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-                SetUsers(data);
+                console.log(data)
+                SetUsers(data[0]);
             })
-    }, [book]);
+    }, [user.email]);
+
 
     const btnSearch = (e) => {
         e.preventDefault();
@@ -57,20 +60,20 @@ const Profile = () => {
     const handleUpdateUserInfo = (e) => {
         e.preventDefault();
 
-        const displayName = e.target.displayName.value;
-        const empPhone = e.target.empPhone.value;
-        const photoURL = e.target.photoURL.value;
         const designation = e.target.designation.value;
-        const enteredBy = user?.email;
+        const email = users?.email;
+        const photoURL = e.target.photoURL.value;
+        const phone = e.target.phone.value;
+        const id = users?.id;
 
         // console.log(name, email, password);
         const product = {
-            displayName, empPhone, photoURL, designation, enteredBy
+            designation, email, photoURL, phone
         };
 
         console.log(product);
         // send data to the server
-        fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`, {
+        fetch(`http://localhost:5000/user/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -94,9 +97,9 @@ const Profile = () => {
         setdisplayName(e.target.value)
     }
     const empPhoneChange = (e) => {
-        const { empPhone, ...rest } = users;
+        const { phone, ...rest } = users;
         const newBrand = e.target.value;
-        const newProduct = { empPhone: newBrand, ...rest };
+        const newProduct = { phone: newBrand, ...rest };
         SetUsers(newProduct);
     }
     const photoURLChange = (e) => {
@@ -218,7 +221,7 @@ const Profile = () => {
                             <div className="col-2">
                                 <div className="input-group">
                                     <label className="label">মোবাইল</label>
-                                    <input onChange={empPhoneChange} name='empPhone' className="input--style-4" type="text" value={users?.empPhone} />
+                                    <input onChange={empPhoneChange} name='phone' className="input--style-4" type="text" value={users?.phone} />
                                 </div>
                             </div>
                         </div>
@@ -231,8 +234,8 @@ const Profile = () => {
                             </div>
                             <div className="col-2">
                                 <div className="input-group">
-                                    <label className="label">যাচাইকৃত</label>
-                                    <input name='emailVerified' className="input--style-4" type="text" value={users?.emailVerified} disabled />
+                                    <label className="label">প্রশিক্ষণ আইডি</label>
+                                    <input name='trg_id' className="input--style-4" type="text" value={users?.trg_id} disabled />
                                 </div>
                             </div>
                         </div>
