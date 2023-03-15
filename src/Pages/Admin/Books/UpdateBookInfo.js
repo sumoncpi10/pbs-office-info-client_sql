@@ -10,6 +10,8 @@ const UpdateBookInfo = () => {
     const [book, setBook] = useState([]);
     const [zonals, setZonals] = useState([]);
     const [ccs, setCcs] = useState([]);
+    const [pbs_code, setPbsCode] = useState('');
+    const [zonal_code, setZonalCode] = useState('');
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
 
@@ -20,6 +22,8 @@ const UpdateBookInfo = () => {
             .then(data => {
                 console.log(data)
                 setUsers(data);
+                setPbsCode(data[0].pbs_code);
+                setZonalCode(data[0].zonal_code)
             })
     }, []);
     useEffect(() => {
@@ -31,23 +35,23 @@ const UpdateBookInfo = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/zonals`)
+        fetch(`http://localhost:5000/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
                 console.log(data);
-
             })
-    }, []);
+    }, [pbs_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/ccs`)
+        fetch(`http://localhost:5000/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
                 console.log(data);
-
+                console.log(zonal_code);
+                console.log(pbs_code);
             })
-    }, []);
+    }, [zonal_code]);
     const handleUpdateDNPInfo = (e) => {
         e.preventDefault();
         // const id = e.target.id.value;
@@ -106,7 +110,9 @@ const UpdateBookInfo = () => {
         const newProduct = { kw: newBrand, ...rest };
         setBook(newProduct);
     }
-
+    const setZonalCodeM = (e) => {
+        setZonalCode(e.target.value);
+    }
     return (
         <div className="wrapper wrapper--w680">
             <div className="card card-4">
@@ -136,7 +142,7 @@ const UpdateBookInfo = () => {
                                 <div className="input-group">
                                     <label className="label">অফিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
-                                    <select name="zonal_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    <select onChange={setZonalCodeM} name="zonal_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
                                         {
                                             zonals.map(z => <option selected={z.zonal_code == book.zonal_code} value={z.zonal_code}>{z.zonal_name}</option>)
                                         }

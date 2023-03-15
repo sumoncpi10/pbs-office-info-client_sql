@@ -8,7 +8,11 @@ import { faFilePdf } from '@fortawesome/free-solid-svg-icons';
 const CollectionReports = () => {
     const [collectionInfo, setCollectionInfo] = useState([]);
     const [users, SetUsers] = useState([]);
-    const [cdate, setCDate] = useState(new Date());
+    const [zonals, setZonals] = useState([]);
+    const [ccs, setCcs] = useState([]);
+    const [pbs_code, setPbsCode] = useState('');
+    const [zonal_code, setZonalCode] = useState('');
+    // const [cdate, setCDate] = useState(new Date());
     const [NumOfCashCollection, setNumOfCashCollection] = useState(0);
     const [AmountOfCashCollection, setAmountOfCashCollection] = useState(0);
     const [NumOfOtherCollection, setNumOfOtherCollection] = useState(0);
@@ -17,14 +21,42 @@ const CollectionReports = () => {
     const [AmmountOfDC, setAmmountOfDC] = useState(0);
 
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/collections`)
+        fetch(`http://localhost:5000/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);
+
                 console.log(data);
                 setTimeout(totalAdd(data), 2000);
             })
     }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/users`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setPbsCode(data[0].pbs_code);
+                SetUsers(data);
+            })
+    }, []);
+    useEffect(() => {
+        fetch(`http://localhost:5000/zonals/${pbs_code}`)
+            .then(res => res.json())
+            .then(data => {
+                setZonals(data);
+                console.log(data);
+            })
+    }, [pbs_code]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/ccs/${zonal_code}`)
+            .then(res => res.json())
+            .then(data => {
+                setCcs(data);
+                console.log(data);
+                console.log(zonal_code);
+                console.log(pbs_code);
+            })
+    }, [zonal_code]);
     const totalAdd = (e) => {
         var NumOfCashCollectionadd = 0, AmountOfCashCollectionadd = 0,
             NumOfOtherCollectionadd = 0, AmmountOfOtherCollectionadd = 0,
@@ -44,81 +76,76 @@ const CollectionReports = () => {
         setNumOfDC(NumOfDCadd);
         setAmmountOfDC(AmmountOfDCadd);
     }
-    useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/users`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                SetUsers(data);
-            })
-    }, []);
+    // console.log(zonal_code);
 
     const btnSearch = async (e) => {
         e.preventDefault();
-        console.log(cdate);
+        // console.log(cdate);
         // defaultValue = cdate?.toISOString().split('T')[0];
-        const pbs = e.target.pbs.value;
-        const zonal = e.target.zonal.value;
-        const complainCenter = e.target.complainCenter.value;
+        const pbs_code = e.target.pbs_code.value;
+        const zonal_code = e.target.zonal_code.value;
+        const cc_code = e.target.cc_code.value;
 
         const dateFrom = e.target.dateFrom.value;
         const dateTo = e.target.dateTo.value;
         const bookNo = e.target.bookNo.value;
-        console.log(pbs, zonal, complainCenter, dateFrom, dateTo);
-        fetch(`https://pbsofficeinfo.onrender.com/Collection?pbs=${pbs}&zonal=${zonal}&complainCenter=${complainCenter}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}`)
+        const assign_to = e.target.assign_to.value;
+        const collected_by = e.target.collected_by.value;
+        console.log(pbs_code, zonal_code, cc_code, bookNo, dateFrom, dateTo, assign_to, collected_by);
+        fetch(`http://localhost:5000/Collection?pbs_code=${pbs_code}&zonal_code=${zonal_code}&cc_code=${cc_code}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}&assign_to=${assign_to}&collected_by=${collected_by}`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);
                 console.log(data);
                 setTimeout(totalAdd(data), 2000);
-                // defaultValue = '';
                 e.target.reset();
             })
     }
+    const setZonalCodeM = (e) => {
+        setZonalCode(e.target.value);
+    }
+
     return (
         <div>
             <div class="container">
                 <div class="row align-items-center">
                     <form onSubmit={btnSearch} className="d-flex flex-column" role="search">
                         <div className="row row-space ">
-                            <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>পবিসের নাম</label>
                                 <div className="input-group">
-                                    <select name="pbs" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='29'>চট্টগ্রাম পবিস-২</option>
+                                    <select name="pbs_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value='29'>Chittagong PBS-2</option>
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>জোনালের নাম</label>
                                 <div className="input-group">
-                                    <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='2901'>সদর দপ্তর</option>
-                                        <option value='2902'>রাঙ্গুনিয়া জোনাল অফিস</option>
-                                        <option value='2903'>ফটিকছড়ি জোনাল অফিস</option>
-                                        <option value='2904'>নোয়াপাড়া জোনাল অফিস</option>
-                                        <option value='2905'>আজাদীবাজার জোনাল অফিস</option>
-                                        <option value='2906'>ধামাইরহাট সাব জোনাল অফিস</option>
-                                        <option value='2907'>দাঁতমারা সাব জোনাল অফিস</option>
-                                        <option value='2908'>নাজিরহাট সাব জোনাল অফিস</option>
+                                    <select onChange={setZonalCodeM} name="zonal_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                        <option value=''></option>
+                                        {
+                                            zonals.map(z => <option key={z.id} value={z.zonal_code}>{z.zonal_name}</option>)
+                                        }
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>অভিযোগ কেন্দ্র</label>
                                 <div className="input-group">
-                                    <select name="complainCenter" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    <select name="cc_code" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
                                         <option value=''></option>
-                                        <option value='290200'>রাঙ্গুনিয়া জোনাল অফিস</option>
-                                        <option value='290201'>গোচরা</option>
-                                        <option value='290202'>শিলক</option>
-                                        <option value='290204'>সরবভাটা</option>
-                                        <option value='290205'>লিচুবাগান</option>
-                                        <option value='290206'>পদুয়া</option>
+                                        {
+                                            ccs.map(z => <option key={z.id} value={z.cc_code}>{z.cc_name}</option>)
+                                        }
                                     </select>
                                 </div>
                             </div>
-                            {/* <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>বই নং</label>
+                                <input type="text" name='bookNo' className="input--style-4" style={{ 'line-height': '14px' }}></input>
+                            </div>
+                            {/* <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>বছর</label>
                                 <div className="input-group">
                                     <select name="year" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
@@ -129,7 +156,7 @@ const CollectionReports = () => {
                                     </select>
                                 </div>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>মাসের নাম</label>
                                 <div className="input-group">
                                     <select name="month" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
@@ -148,23 +175,23 @@ const CollectionReports = () => {
                                     </select>
                                 </div>
                             </div> */}
-                            <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>হতে</label>
                                 <input type="date" name='dateFrom' className="input--style-4" style={{ 'line-height': '14px' }} required></input>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-4">
+                            <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>পর্যন্ত</label>
                                 <input type="date" name='dateTo' className="input--style-4" style={{ 'line-height': '14px' }} required></input>
                             </div>
-                            <div className="col-sm-12 col-12 col-md-4">
-                                <label className="label" style={{ 'color': 'white' }}>বই নং</label>
-                                <input type="text" name='bookNo' className="input--style-4" style={{ 'line-height': '14px' }}></input>
-
-                                {/* <div className="input-group">
-                                    <select name="bookNo" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                    </select>
-                                </div> */}
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>দ্বায়িত্বপ্রাপ্ত কর্মকর্তা/কর্মচারী</label>
+                                <input type="text" name='assign_to' className="input--style-4" style={{ 'line-height': '14px' }} ></input>
                             </div>
+                            <div className="col-sm-12 col-12 col-md-3">
+                                <label className="label" style={{ 'color': 'white' }}>আদায়কারী</label>
+                                <input type="text" name='collected_by' className="input--style-4" style={{ 'line-height': '14px' }} ></input>
+                            </div>
+
                             <button className="btn btn-outline-secondary bg-secondary" type="submit">Search</button>
                         </div >
                     </form >
@@ -249,9 +276,10 @@ const CollectionReports = () => {
                                                 <td>{collection.NumOfDC}</td>
                                                 <td>{collection.AmmountOfDC}</td>
                                                 <td>{collection.cdate}</td>
-                                                {
+                                                <td>{collection.displayName}</td>
+                                                {/* {
                                                     users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
-                                                }
+                                                } */}
                                             </tr>
                                             )
                                         }

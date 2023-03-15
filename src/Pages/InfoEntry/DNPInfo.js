@@ -28,6 +28,7 @@ const DNPInfo = () => {
     const [user, loading, error] = useAuthState(auth);
     const [book, setBook] = useState([]);
     const [users, SetUsers] = useState([]);
+
     // const [zonals, setZonals] = useState([]);
     const [officeInfo, setofficeInfo] = useState([]);
     const today = new Date();
@@ -51,17 +52,10 @@ const DNPInfo = () => {
             .then(data => {
                 // console.log(data);
                 SetUsers(data);
+
             })
     }, [book]);
-    // useEffect(() => {
-    //     fetch(`http://localhost:5000/zonals`)
-    //         .then(res => res.json())
-    //         .then(data => {
-    //             setZonals(data);
-    //             console.log(data);
 
-    //         })
-    // }, []);
     const btnSearch = (e) => {
         e.preventDefault();
         const textSearch = e.target.textSearch.value;
@@ -111,6 +105,7 @@ const DNPInfo = () => {
             })
     }
     const [cdate, setCDate] = useState(new Date());
+
     return (
         <div className="wrapper wrapper--w680">
             <div className="card card-4">

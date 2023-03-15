@@ -44,14 +44,14 @@ const Home = () => {
         setNumOfDC(NumOfDCadd);
         setamountOfDcConsumer(amountOfDcConsumeradd);
     }
-    useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/users`)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                SetUsers(data);
-            })
-    }, []);
+    // useEffect(() => {
+    //     fetch(`https://pbsofficeinfo.onrender.com/users`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data);
+    //             SetUsers(data);
+    //         })
+    // }, []);
 
     const btnSearch = async (e) => {
         e.preventDefault();

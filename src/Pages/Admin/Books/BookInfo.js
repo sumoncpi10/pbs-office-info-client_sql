@@ -81,12 +81,16 @@ const DNPInfo = () => {
     // const [pbs, setPbss] = useState([]);
     const [zonals, setZonals] = useState([]);
     const [ccs, setCcs] = useState([]);
+    const [pbs_code, setPbsCode] = useState('');
+    const [zonal_code, setZonalCode] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
         fetch(`http://localhost:5000/users`)
             .then(res => res.json())
             .then(data => {
                 setUsers(data);
+                setPbsCode(data[0].pbs_code);
+                setZonalCode(data[0].zonal_code);
                 console.log(data);
 
             })
@@ -101,23 +105,23 @@ const DNPInfo = () => {
     //         })
     // }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/zonals`)
+        fetch(`http://localhost:5000/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
                 console.log(data);
-
             })
-    }, []);
+    }, [pbs_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/ccs`)
+        fetch(`http://localhost:5000/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
                 console.log(data);
-
+                console.log(zonal_code);
+                console.log(pbs_code);
             })
-    }, []);
+    }, [zonal_code]);
     const handleAddDNPInfo = (e) => {
         e.preventDefault();
 
@@ -155,18 +159,21 @@ const DNPInfo = () => {
             })
     }
     const [user, loading, error] = useAuthState(auth);
+    const setZonalCodeM = (e) => {
+        setZonalCode(e.target.value);
+    }
     return (
         <div className="wrapper wrapper--w680">
             <div className="card card-4">
 
                 <div className="card-body">
                     <h2 className="title">বই এর তথ্য</h2>
-                    <div className="container-fluid p-2 mb-3">
+                    {/* <div className="container-fluid p-2 mb-3">
                         <form className="d-flex" role="search">
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                             <button className="btn btn-outline-secondary bg-dark" type="submit">Search</button>
                         </form>
-                    </div>
+                    </div> */}
 
                     <form method="POST" onSubmit={handleAddDNPInfo}>
                         <div className="row row-space">
@@ -183,7 +190,7 @@ const DNPInfo = () => {
                                 <div className="input-group">
                                     <label className="label">অফিসের নাম</label>
                                     {/* <input className="input--style-4" type="email" name="email" /> */}
-                                    <select name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
+                                    <select onChange={setZonalCodeM} name="zonal" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
                                         {
                                             zonals.map(z => <option key={z.id} value={z.zonal_code}>{z.zonal_name}</option>)
                                         }

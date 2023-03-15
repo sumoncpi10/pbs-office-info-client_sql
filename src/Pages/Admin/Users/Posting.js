@@ -36,6 +36,8 @@ const Posting = () => {
     const [officeInfo, setofficeInfo] = useState([]);
     const [zonals, setZonals] = useState([]);
     const [ccs, setCcs] = useState([]);
+    const [pbs_code, setPbsCode] = useState('');
+    const [zonal_code, setZonalCode] = useState('');
     // console.log(admin)
     const [luser, SetlUser] = useState([]);
     // console.log(user)
@@ -48,23 +50,23 @@ const Posting = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/zonals`)
+        fetch(`http://localhost:5000/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
                 console.log(data);
-
             })
-    }, []);
+    }, [pbs_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/ccs`)
+        fetch(`http://localhost:5000/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
                 console.log(data);
-
+                console.log(zonal_code);
+                console.log(pbs_code);
             })
-    }, []);
+    }, [zonal_code]);
     // useEffect(() => {
     //     fetch(`https://pbsofficeinfo.onrender.com/user/${user?.email}`)
     //         .then(res => res.json())
