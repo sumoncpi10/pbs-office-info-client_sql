@@ -17,7 +17,7 @@ const Home = () => {
     const [amountOfDcConsumer, setamountOfDcConsumer] = useState(0);
 
     useEffect(() => {
-        fetch(`https://pbsofficeinfo.onrender.com/collections`)
+        fetch(`http://localhost:5000/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);
@@ -35,7 +35,7 @@ const Home = () => {
             NumOfOtherCollectionadd += parseInt(e[i].NumOfOtherCollection);
             AmmountOfOtherCollectionadd += parseInt(e[i].AmmountOfOtherCollection);
             NumOfDCadd += parseInt(e[i].NumOfDC);
-            amountOfDcConsumeradd += parseInt(e[i].amountOfDcConsumer);
+            amountOfDcConsumeradd += parseInt(e[i].AmmountOfDC);
         }
         setNumOfCashCollection(NumOfCashCollectionadd);
         setAmountOfCashCollection(AmountOfCashCollectionadd);
@@ -156,10 +156,11 @@ const Home = () => {
                                                 <td>{collection.NumOfOtherCollection}</td>
                                                 <td>{collection.AmmountOfOtherCollection}</td>
                                                 <td>{collection.NumOfDC}</td>
-                                                <td>{collection.amountOfDcConsumer}</td>
-                                                {
+                                                <td>{collection.AmmountOfDC}</td>
+                                                <td>{collection.displayName}</td>
+                                                {/* {
                                                     users.map(user => user._id == collection.collectedBy ? < td > {user.displayName}</td> : '')
-                                                }
+                                                } */}
                                             </tr>
                                             )
                                         }

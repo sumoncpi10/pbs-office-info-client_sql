@@ -31,10 +31,10 @@ function App() {
   const [u, setU] = useState([]);
 
   useEffect(() => {
-    fetch(`https://pbsofficeinfo.onrender.com/users`)
+    fetch(`http://localhost:5000/users`)
       .then(res => res.json())
       .then(data => {
-        console.log(data)
+        // console.log(data);
         setU(data);
       })
   }, []);
