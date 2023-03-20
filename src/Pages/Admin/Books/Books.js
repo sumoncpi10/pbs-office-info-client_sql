@@ -74,7 +74,7 @@ const Books = () => {
                                     <thead>
                                         <tr>
                                             <th scope="col" class="ps-4" style={{ "width": "50px" }}>
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" htmlFor="contacusercheck"></label></div>
                                             </th>
                                             <th scope="col">Name & Position</th>
                                             <th scope="col">Zonal</th>
@@ -89,7 +89,7 @@ const Books = () => {
                                         {
                                             bookInfo.map(book => <tr>
                                                 <th scope="row" class="ps-4">
-                                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
+                                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" htmlFor="contacusercheck1"></label></div>
                                                 </th>
                                                 {/* <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">{book?.empName}</a></td> */}
                                                 <td><a href="#" class="text-body">{book?.displayName}</a><span class="badge badge-soft-success mb-0">{book?.designation}</span></td>

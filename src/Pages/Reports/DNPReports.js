@@ -65,7 +65,7 @@ const DNPReports = () => {
                                     <thead>
                                         <tr>
                                             <th scope="col" class="ps-4" style={{ "width": "50px" }}>
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" htmlFor="contacusercheck"></label></div>
                                             </th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Position</th>
@@ -77,7 +77,7 @@ const DNPReports = () => {
                                     <tbody>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" htmlFor="contacusercheck1"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Simon Ryles</a></td>
                                             <td><span class="badge badge-soft-success mb-0">Full Stack Developer</span></td>
@@ -102,7 +102,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck2" /><label class="form-check-label" for="contacusercheck2"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck2" /><label class="form-check-label" htmlFor="contacusercheck2"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Marion Walker</a></td>
                                             <td><span class="badge badge-soft-info mb-0">Frontend Developer</span></td>
@@ -127,7 +127,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck3" /><label class="form-check-label" for="contacusercheck3"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck3" /><label class="form-check-label" htmlFor="contacusercheck3"></label></div>
                                             </th>
                                             <td>
                                                 <div class="avatar-sm d-inline-block me-2">
@@ -157,7 +157,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck4" /><label class="form-check-label" for="contacusercheck4"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck4" /><label class="form-check-label" htmlFor="contacusercheck4"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Shanon Marvin</a></td>
                                             <td><span class="badge badge-soft-primary mb-0">Backend Developer</span></td>
@@ -182,7 +182,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck5" /><label class="form-check-label" for="contacusercheck5"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck5" /><label class="form-check-label" htmlFor="contacusercheck5"></label></div>
                                             </th>
                                             <td>
                                                 <div class="avatar-sm d-inline-block me-2">
@@ -210,7 +210,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck6" /><label class="form-check-label" for="contacusercheck6"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck6" /><label class="form-check-label" htmlFor="contacusercheck6"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Janice Morgan</a></td>
                                             <td><span class="badge badge-soft-primary mb-0">Backend Developer</span></td>
@@ -235,7 +235,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck7" /><label class="form-check-label" for="contacusercheck7"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck7" /><label class="form-check-label" htmlFor="contacusercheck7"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Patrick Petty</a></td>
                                             <td><span class="badge badge-soft-danger mb-0">UI/UX Designer</span></td>
@@ -260,7 +260,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck8" /><label class="form-check-label" for="contacusercheck8"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck8" /><label class="form-check-label" htmlFor="contacusercheck8"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Marilyn Horton</a></td>
                                             <td><span class="badge badge-soft-primary mb-0">Backend Developer</span></td>
@@ -285,7 +285,7 @@ const DNPReports = () => {
                                         </tr>
                                         <tr>
                                             <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck9" /><label class="form-check-label" for="contacusercheck9"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck9" /><label class="form-check-label" htmlFor="contacusercheck9"></label></div>
                                             </th>
                                             <td><img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="avatar-sm rounded-circle me-2" /><a href="#" class="text-body">Neal Womack</a></td>
                                             <td><span class="badge badge-soft-success mb-0">Full Stack Developer</span></td>

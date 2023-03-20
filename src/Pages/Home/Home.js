@@ -131,7 +131,7 @@ const Home = () => {
                                     <thead>
                                         <tr>
                                             <th scope="col" class="ps-4" style={{ "width": "50px" }}>
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
+                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" htmlFor="contacusercheck"></label></div>
                                             </th>
                                             <th scope="col">বই</th>
                                             <th scope="col">নগদ(টি)</th>
@@ -148,7 +148,7 @@ const Home = () => {
                                         {
                                             collectionInfo.map(collection => <tr>
                                                 <th scope="row" class="ps-4">
-                                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
+                                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" htmlFor="contacusercheck1"></label></div>
                                                 </th>
                                                 <td><span class="badge badge-soft-success mb-0">{collection.bookNo}</span></td>
                                                 <td>{collection.NumOfCashCollection}</td>
@@ -168,7 +168,7 @@ const Home = () => {
                                             <th scope="row" class="ps-4">
                                                 <div class="form-check font-size-16">
                                                     {/* <input type="checkbox" class="form-check-input" id="contacusercheck1" /> */}
-                                                    <label class="form-check-label" for="contacusercheck1"></label></div>
+                                                    <label class="form-check-label" htmlFor="contacusercheck1"></label></div>
                                             </th>
                                             <td><span class="badge badge-soft-primary mb-0">Total</span></td>
                                             <td>{NumOfCashCollection ? NumOfCashCollection : ""}</td>

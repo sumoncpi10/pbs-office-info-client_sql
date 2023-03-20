@@ -107,8 +107,8 @@ const CollectionReports = () => {
 
     return (
         <div>
-            <div class="container">
-                <div class="row align-items-center">
+            <div className="container">
+                <div className="row align-items-center">
                     <form onSubmit={btnSearch} className="d-flex flex-column" role="search">
                         <div className="row row-space ">
                             <div className="col-sm-12 col-12 col-md-3">
@@ -143,112 +143,73 @@ const CollectionReports = () => {
                             </div>
                             <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>বই নং</label>
-                                <input type="text" name='bookNo' className="input--style-4" style={{ 'line-height': '14px' }}></input>
+                                <input type="text" name='bookNo' className="input--style-4" style={{ 'lineHeight': '14px' }}></input>
                             </div>
-                            {/* <div className="col-sm-12 col-12 col-md-3">
-                                <label className="label" style={{ 'color': 'white' }}>বছর</label>
-                                <div className="input-group">
-                                    <select name="year" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='2022' selected>2022</option>
-                                        <option value='2023'>2023</option>
-                                        <option value='2024'>2024</option>
-                                        <option value='2025'>2025</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-sm-12 col-12 col-md-3">
-                                <label className="label" style={{ 'color': 'white' }}>মাসের নাম</label>
-                                <div className="input-group">
-                                    <select name="month" className="input--style-4" style={{ "width": "550px", "lineHeight": "50px" }}>
-                                        <option value='01'>জানুয়ারী</option>
-                                        <option value='02'>ফেব্রুয়ারী</option>
-                                        <option value='03'>মার্চ</option>
-                                        <option value='04'>এপ্রিল</option>
-                                        <option value='05'>মে</option>
-                                        <option value='06'>জুন</option>
-                                        <option value='07'>জুলাই</option>
-                                        <option value='08'>আগষ্ট</option>
-                                        <option value='09'>সেপ্টেম্বর</option>
-                                        <option value='10'>অক্টোবর</option>
-                                        <option value='11'>নভেম্বর</option>
-                                        <option value='12'>ডিসেম্বর</option>
-                                    </select>
-                                </div>
-                            </div> */}
+
                             <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>হতে</label>
-                                <input type="date" name='dateFrom' className="input--style-4" style={{ 'line-height': '14px' }} required></input>
+                                <input type="date" name='dateFrom' className="input--style-4" style={{ 'lineHeight': '14px' }} required></input>
                             </div>
                             <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>পর্যন্ত</label>
-                                <input type="date" name='dateTo' className="input--style-4" style={{ 'line-height': '14px' }} required></input>
+                                <input type="date" name='dateTo' className="input--style-4" style={{ 'lineHeight': '14px' }} required></input>
                             </div>
                             <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>দ্বায়িত্বপ্রাপ্ত কর্মকর্তা/কর্মচারী</label>
-                                <input type="text" name='assign_to' className="input--style-4" style={{ 'line-height': '14px' }} ></input>
+                                <select name="assign_to" className="" style={{ "width": "250px", "lineHeight": "50px" }}>
+                                    <option value="">--Select--</option>
+                                    {
+                                        users.map(u => <option key={u.id} value={u.trg_id}>{u.displayName}, {u.designation}</option>)
+                                    }
+                                </select>
                             </div>
                             <div className="col-sm-12 col-12 col-md-3">
                                 <label className="label" style={{ 'color': 'white' }}>আদায়কারী</label>
-                                <input type="text" name='collected_by' className="input--style-4" style={{ 'line-height': '14px' }} ></input>
+                                <select name="collected_by" className="" style={{ "width": "250px", "lineHeight": "50px" }}>
+                                    <option value="">--Select--</option>
+                                    {
+                                        users.map(u => <option key={u.id} value={u.id}>{u.displayName}, {u.designation}</option>)
+                                    }
+                                </select>
                             </div>
 
                             <button className="btn btn-outline-secondary bg-secondary" type="submit">Search</button>
                         </div >
                     </form >
                 </div >
-                <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <h5 class="card-title">মোট আদায় <span class="text-success fw-normal ms-2">({collectionInfo?.length})</span></h5>
+                <div className="row align-items-center">
+                    <div className="col-md-6">
+                        <div className="mb-3">
+                            <h5 className="card-title">মোট আদায় <span className="text-success fw-normal ms-2">({collectionInfo?.length})</span></h5>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
-                            {/* <div>
-                                <ul class="nav nav-pills">
-                                    <li class="nav-item">
-                                        <a
-                                            aria-current="page"
-                                            href="#"
-                                            class="router-link-active router-link-exact-active nav-link active"
-                                            data-bs-toggle="tooltip"
-                                            data-bs-placement="top"
-                                            title=""
-                                            data-bs-original-title="List"
-                                            aria-label="List"
-                                        >
-                                            <i class="bx bx-list-ul"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Grid" aria-label="Grid"><i class="bx bx-grid-alt"></i></a>
-                                    </li>
-                                </ul>
-                            </div> */}
+                    <div className="col-md-6">
+                        <div className="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
+
                             <div>
-                                <button class="btn btn-primary"><FontAwesomeIcon icon={faFilePdf} /> Download PDF</button>
+                                <button className="btn btn-primary"><FontAwesomeIcon icon={faFilePdf} /> Download PDF</button>
                             </div>
-                            <div class="dropdown">
-                                <a class="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bx bx-dots-horizontal-rounded"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <div className="dropdown">
+                                <a className="btn btn-link text-muted py-1 font-size-16 shadow-none dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i className="bx bx-dots-horizontal-rounded"></i></a>
+                                <ul className="dropdown-menu dropdown-menu-end">
+                                    <li><a className="dropdown-item" href="#">Action</a></li>
+                                    <li><a className="dropdown-item" href="#">Another action</a></li>
+                                    <li><a className="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="">
-                            <div class="table-responsive">
-                                <table class="table project-list-table table-nowrap align-middle table-borderless">
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="">
+                            <div className="table-responsive">
+                                <table className="table project-list-table table-nowrap align-middle table-borderless">
                                     <thead>
                                         <tr>
-                                            <th scope="col" class="ps-4" style={{ "width": "50px" }}>
-                                                <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck" /><label class="form-check-label" for="contacusercheck"></label></div>
+                                            <th scope="col" className="ps-4" style={{ "width": "50px" }}>
+                                                <div className="form-check font-size-16"><input type="checkbox" className="form-check-input" id="contacusercheck" /><label className="form-check-label" htmlFor="contacusercheck"></label></div>
                                             </th>
                                             <th scope="col">বই</th>
                                             <th scope="col">নগদ(টি)</th>
@@ -265,10 +226,10 @@ const CollectionReports = () => {
                                     <tbody>
                                         {
                                             collectionInfo.map(collection => <tr>
-                                                <th scope="row" class="ps-4">
-                                                    <div class="form-check font-size-16"><input type="checkbox" class="form-check-input" id="contacusercheck1" /><label class="form-check-label" for="contacusercheck1"></label></div>
+                                                <th scope="row" className="ps-4">
+                                                    <div className="form-check font-size-16"><input type="checkbox" className="form-check-input" id="contacusercheck1" /><label className="form-check-label" htmlFor="contacusercheck1"></label></div>
                                                 </th>
-                                                <td><span class="badge badge-soft-success mb-0">{collection.bookNo}</span></td>
+                                                <td><span className="badge badge-soft-success mb-0">{collection.bookNo}</span></td>
                                                 <td>{collection.NumOfCashCollection}</td>
                                                 <td>{collection.AmountOfCashCollection}</td>
                                                 <td>{collection.NumOfOtherCollection}</td>
@@ -284,12 +245,12 @@ const CollectionReports = () => {
                                             )
                                         }
                                         <tr className=' bg-light'>
-                                            <th scope="row" class="ps-4">
-                                                <div class="form-check font-size-16">
-                                                    {/* <input type="checkbox" class="form-check-input" id="contacusercheck1" /> */}
-                                                    <label class="form-check-label" for="contacusercheck1"></label></div>
+                                            <th scope="row" className="ps-4">
+                                                <div className="form-check font-size-16">
+                                                    {/* <input type="checkbox" className="form-check-input" id="contacusercheck1" /> */}
+                                                    <label className="form-check-label" htmlFor="contacusercheck1"></label></div>
                                             </th>
-                                            <td><span class="badge badge-soft-primary mb-0">Total</span></td>
+                                            <td><span className="badge badge-soft-primary mb-0">Total</span></td>
                                             <td>{NumOfCashCollection ? NumOfCashCollection : "0"}</td>
                                             <td>{AmountOfCashCollection ? AmountOfCashCollection : "0"}</td>
                                             <td>{NumOfOtherCollection ? NumOfOtherCollection : "0"}</td>
@@ -308,28 +269,7 @@ const CollectionReports = () => {
                         </div>
                     </div>
                 </div>
-                {/* <div class="row g-0 align-items-center pb-4">
-                    <div class="col-sm-6">
-                        <div><p class="mb-sm-0">Showing 1 to 10 of 57 entries</p></div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="float-sm-end">
-                            <ul class="pagination mb-sm-0">
-                                <li class="page-item disabled">
-                                    <a href="#" class="page-link"><i class="mdi mdi-chevron-left"></i></a>
-                                </li>
-                                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                <li class="page-item">
-                                    <a href="#" class="page-link"><i class="mdi mdi-chevron-right"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div> */}
+
             </div >
         </div >
     );
