@@ -6,19 +6,19 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_APIKEY,
-    authDomain: process.env.REACT_APP_AUTHDOMAIN,
-    projectId: process.env.REACT_APP_PROJECTID,
-    storageBucket: process.env.REACT_APP_STORAGEBUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
-    appId: process.env.REACT_APP_APPID,
+    // apiKey: process.env.REACT_APP_APIKEY,
+    // authDomain: process.env.REACT_APP_AUTHDOMAIN,
+    // projectId: process.env.REACT_APP_PROJECTID,
+    // storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+    // messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+    // appId: process.env.REACT_APP_APPID,
 
-    // apiKey: "AIzaSyC1iWp_2nzv4AeXVUbXCsnsH6QpmFNqtTg",
-    // authDomain: "pbs-office-info.firebaseapp.com",
-    // projectId: "pbs-office-info",
-    // storageBucket: "pbs-office-info.appspot.com",
-    // messagingSenderId: "147892014815",
-    // appId: "1:147892014815:web:a3196f0040297cd9db636a"
+    apiKey: "AIzaSyC6xMmAsZxxSazO76V6PftEFVQxmHwDmVo",
+    authDomain: "pbs-info.firebaseapp.com",
+    projectId: "pbs-info",
+    storageBucket: "pbs-info.appspot.com",
+    messagingSenderId: "88895302306",
+    appId: "1:88895302306:web:a3996510c75e46432305fb"
 };
 
 // Initialize Firebase
