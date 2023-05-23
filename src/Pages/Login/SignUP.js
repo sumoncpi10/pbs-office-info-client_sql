@@ -26,7 +26,7 @@ const SignUP = ({ setuserV }) => {
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || '/';
-    if (user) {
+    if (user ? user : '') {
         // console.log(user);
         // navigate('/');
         navigate(from, { replace: true });

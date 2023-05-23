@@ -31,7 +31,7 @@ function App() {
   const [u, setU] = useState([]);
 
   useEffect(() => {
-    fetch(`https://pbsofficeinfosql.onrender.com/users`)
+    fetch(`http://localhost:5000/users`)
       .then(res => res.json())
       .then(data => {
         // console.log(data);
@@ -54,6 +54,7 @@ function App() {
           <Route path="/collection-info-report" element={<RequireAuth><CollectionReports /></RequireAuth>}></Route>
           <Route path="/dnp-info-report" element={<RequireAuth><DNPReports /></RequireAuth>}></Route>
           <Route path="/users" element={<RequireAuth><Users /></RequireAuth>}></Route>
+          {/* <Route path="/users" element={<Users />}></Route> */}
           <Route path="/books" element={<RequireAuth><Books></Books></RequireAuth>}></Route>
           <Route path="/offices" element={<RequireAuth><Offices></Offices></RequireAuth>}></Route>
           <Route path="/addUser" element={<RequireAuth><AddUser /></RequireAuth>}></Route>

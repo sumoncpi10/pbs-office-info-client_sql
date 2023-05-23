@@ -6,7 +6,7 @@ const User = ({ user }) => {
     const navigate = useNavigate();
     // console.log(user)
     // useEffect(() => {
-    //     fetch(`https://pbsofficeinfosql.onrender.com/user/${user?.trg_id}`)
+    //     fetch(`http://localhost:5000/user/${user?.trg_id}`)
     //         .then(res => res.json())
     //         .then(data => {
     //             // console.log(data);

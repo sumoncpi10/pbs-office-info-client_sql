@@ -85,7 +85,7 @@ const Login = ({ setuserV }) => {
     const btnLogin = async (e) => {
         // signInWithEmailAndPassword(email, password)
         if (trg_id && password) {
-            fetch(`https://pbsofficeinfosql.onrender.com/Login?trg_id=${trg_id}&password=${password}`)
+            fetch(`http://localhost:5000/Login?trg_id=${trg_id}&password=${password}`)
                 .then(res => res.json())
                 .then(data => {
                     // setCollectionInfo(data);

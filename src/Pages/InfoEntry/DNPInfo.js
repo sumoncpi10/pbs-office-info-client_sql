@@ -2,6 +2,7 @@ import './DNPInfo.css';
 // import $ from 'jquery';
 import { toast } from 'react-toastify';
 import { useAuthState } from 'react-firebase-hooks/auth';
+// import auth from '../../firebase.init';
 import auth from '../../firebase.init';
 import { useEffect, useState } from 'react';
 import { format } from 'date-fns';
@@ -47,7 +48,7 @@ const DNPInfo = () => {
     //         })
     // }, [book]);
     useEffect(() => {
-        fetch(`https://pbsofficeinfosql.onrender.com/users`)
+        fetch(`http://localhost:5000/users`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
@@ -59,7 +60,7 @@ const DNPInfo = () => {
     const btnSearch = (e) => {
         e.preventDefault();
         const textSearch = e.target.textSearch.value;
-        fetch(`https://pbsofficeinfosql.onrender.com/book/${textSearch}`)
+        fetch(`http://localhost:5000/book/${textSearch}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -89,7 +90,7 @@ const DNPInfo = () => {
         console.log(product);
         // send data to the server
 
-        fetch('https://pbsofficeinfosql.onrender.com/cashAdd', {
+        fetch('http://localhost:5000/cashAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

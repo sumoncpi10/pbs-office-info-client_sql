@@ -17,7 +17,7 @@ const UpdateBookInfo = () => {
 
     // console.log(use);
     useEffect(() => {
-        fetch(`https://pbsofficeinfosql.onrender.com/users`)
+        fetch(`http://localhost:5000/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -27,7 +27,7 @@ const UpdateBookInfo = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`https://pbsofficeinfosql.onrender.com/bookbyId/${id}`)
+        fetch(`http://localhost:5000/bookbyId/${id}`)
             .then(res => res.json())
             .then(data => {
                 setBook(data[0]);
@@ -35,7 +35,7 @@ const UpdateBookInfo = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`https://pbsofficeinfosql.onrender.com/zonals/${pbs_code}`)
+        fetch(`http://localhost:5000/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
@@ -43,7 +43,7 @@ const UpdateBookInfo = () => {
             })
     }, [pbs_code]);
     useEffect(() => {
-        fetch(`https://pbsofficeinfosql.onrender.com/ccs/${zonal_code}`)
+        fetch(`http://localhost:5000/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
@@ -73,7 +73,7 @@ const UpdateBookInfo = () => {
         // send data to the server
 
 
-        fetch(`https://pbsofficeinfosql.onrender.com/book/${id}`, {
+        fetch(`http://localhost:5000/book/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
