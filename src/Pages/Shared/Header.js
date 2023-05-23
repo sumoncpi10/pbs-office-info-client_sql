@@ -69,7 +69,7 @@ const Header = () => {
                         !user ?
                             <div className="d-flex">
                                 <Link to='/login' className='btn btn-primary'>Login</Link>
-                                <Link to='/signup' className='btn btn-secondary'>Sign Up</Link>
+                                {/* <Link to='/signup' className='btn btn-secondary'>Sign Up</Link> */}
                                 {/* <Link to='/signup' className='btn btn-primary mx-2'>SignUp</Link> */}
                             </div>
                             :

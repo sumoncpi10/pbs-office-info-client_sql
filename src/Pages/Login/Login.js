@@ -18,6 +18,7 @@ const Login = ({ setuserV }) => {
 
     ] = useSignInWithEmailAndPassword(auth);
     const [email, setEmail] = useState('');
+    const [trg_id, setTrg_id] = useState('');
     const [password, setPassword] = useState('');
     const [userG] = useAuthState(auth);
     const navigate = useNavigate();
@@ -49,38 +50,54 @@ const Login = ({ setuserV }) => {
             </div>
         );
     }
-    const btnUserCreate = async (e) => {
-        e.preventDefault();
-        const r = await signInWithGoogle();
-        console.log(r.user)
-        if (await r) {
-            const newuser = await users?.find(user => user.email == r.user.email)
-            console.log(newuser);
-            if (newuser) {
-                toast("Signed in Successfully!");
-                navigate(from, { replace: true });
-            }
-            else {
-                fetch('https://pbsofficeinfo.onrender.com/userAdd', {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(r?.user)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        // console.log('success', data);
-                        toast("User Create Successfully!");
-                        navigate(from, { replace: true });
-                    })
-            }
+    // const btnUserCreate = async (e) => {
+    //     e.preventDefault();
+    //     const r = await signInWithGoogle();
+    //     console.log(r.user)
+    //     if (await r) {
+    //         const newuser = await users?.find(user => user.email == r.user.email)
+    //         console.log(newuser);
+    //         if (newuser) {
+    //             toast("Signed in Successfully!");
+    //             navigate(from, { replace: true });
+    //         }
+    //         else {
+    //             fetch('https://pbsofficeinfo.onrender.com/userAdd', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'content-type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(r?.user)
+    //             })
+    //                 .then(res => res.json())
+    //                 .then(data => {
+    //                     // console.log('success', data);
+    //                     toast("User Create Successfully!");
+    //                     navigate(from, { replace: true });
+    //                 })
+    //         }
 
-        }
-    }
+    //     }
+    // }
     const actionCodeSettings = {
         url: 'http://localhost:3000/login',
     };
+    const btnLogin = async (e) => {
+        // signInWithEmailAndPassword(email, password)
+        if (trg_id && password) {
+            fetch(`https://pbsofficeinfosql.onrender.com/Login?trg_id=${trg_id}&password=${password}`)
+                .then(res => res.json())
+                .then(data => {
+                    // setCollectionInfo(data);
+                    console.log(data);
+                    // setTimeout(totalAdd(data), 2000);
+                    // e.target.reset();
+                })
+        }
+        else {
+            toast("Opps!!!! Your Information is not Correct!!!");
+        }
+    }
 
     return (
         <div className='container'>
@@ -94,8 +111,11 @@ const Login = ({ setuserV }) => {
                                 </div>
                                 <h3 className="text-center mb-4">Have an account?</h3>
                                 <form method='post' className="login-form">
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <input onChange={(e) => setEmail(e.target.value)} name='email' type="text" className="form-control rounded-left" placeholder="Username" required />
+                                    </div> */}
+                                    <div className="form-group">
+                                        <input onChange={(e) => setTrg_id(e.target.value)} name='trg_id' type="text" className="form-control rounded-left" placeholder="User ID" required />
                                     </div>
                                     <div className="form-group d-flex">
                                         <input onChange={(e) => setPassword(e.target.value)} name='password' type="password" className="form-control rounded-left" placeholder="Password" required />
@@ -117,15 +137,15 @@ const Login = ({ setuserV }) => {
                                         </div>
                                         <div class="">
                                             {/* <a href="#"></a>  */}
-                                            <Link to="/signup">Sign Up</Link>
+                                            {/* <Link to="/signup">Sign Up</Link> */}
                                         </div>
                                     </div>
                                     <div className="form-group">
-                                        <button onClick={() => signInWithEmailAndPassword(email, password)} type="button" className="btn btn-primary fs-5 px-5 w-100">Login</button>
+                                        <button onClick={btnLogin} type="button" className="btn btn-primary fs-5 px-5 w-100">Login</button>
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <button className="btn btn-secondary w-100" onClick={btnUserCreate}>Continue With Google</button>
-                                    </div>
+                                    </div> */}
 
                                 </form>
                             </div>

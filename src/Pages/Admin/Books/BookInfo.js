@@ -85,7 +85,7 @@ const DNPInfo = () => {
     const [zonal_code, setZonalCode] = useState('');
     const navigate = useNavigate();
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfosql.onrender.com/users`)
             .then(res => res.json())
             .then(data => {
                 setUsers(data);
@@ -96,7 +96,7 @@ const DNPInfo = () => {
             })
     }, []);
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/pbss`)
+    //     fetch(`https://pbsofficeinfosql.onrender.com/pbss`)
     //         .then(res => res.json())
     //         .then(data => {
     //             setPbss(data);
@@ -105,7 +105,7 @@ const DNPInfo = () => {
     //         })
     // }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/zonals/${pbs_code}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
@@ -113,7 +113,7 @@ const DNPInfo = () => {
             })
     }, [pbs_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/ccs/${zonal_code}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
@@ -144,7 +144,7 @@ const DNPInfo = () => {
         console.log(product);
         // send data to the server
 
-        fetch('http://localhost:5000/dnpBookAdd', {
+        fetch('https://pbsofficeinfosql.onrender.com/dnpBookAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

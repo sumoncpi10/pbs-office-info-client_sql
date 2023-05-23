@@ -38,7 +38,7 @@ const Profile = () => {
     console.log(admin);
     console.log(user.email);
     useEffect(() => {
-        fetch(`http://localhost:5000/user/${user?.email}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/user/${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
@@ -73,7 +73,7 @@ const Profile = () => {
 
         console.log(product);
         // send data to the server
-        fetch(`http://localhost:5000/user/${id}`, {
+        fetch(`https://pbsofficeinfosql.onrender.com/user/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

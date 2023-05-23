@@ -15,21 +15,28 @@ const Users = () => {
     const [users, setUsers] = useState([]);
     const [use] = useAuthState(auth);
     const [admin] = useAdmin(use);
-    // console.log(use);
+    console.log(admin);
+    // useEffect(() => {
+    //     fetch(`https://pbsofficeinfosql.onrender.com/users`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             setUsers(data);
+    //         })
+    // }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfosql.onrender.com/usersByzonal/${admin?.zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data)
                 setUsers(data);
-
             })
-    }, []);
+    }, [admin?.zonal_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/user/${use?.email}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/user/${use?.email}`)
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                // console.log(data);
                 setLUser(data);
             })
     }, [use.email]);
@@ -103,7 +110,7 @@ const Users = () => {
         else if (luser && email && password) {
             const rr = createUserWithEmailAndPassword(email, password);
             if (rr) {
-                fetch('http://localhost:5000/userAdd', {
+                fetch('https://pbsofficeinfosql.onrender.com/userAdd', {
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
@@ -121,7 +128,7 @@ const Users = () => {
         }
         else if (luser && trg_id && password) {
 
-            fetch('http://localhost:5000/userAdd', {
+            fetch('https://pbsofficeinfosql.onrender.com/userAdd', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

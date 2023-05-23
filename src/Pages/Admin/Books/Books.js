@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import useAdmin from '../../../hooks/useAdmin';
+import auth from '../../../firebase.init';
 // import '../../Reports/';
 const Books = () => {
     const [bookInfo, setBookInfo] = useState([]);
     const navigate = useNavigate();
+    const [use] = useAuthState(auth);
+    const [admin] = useAdmin(use);
+    console.log(admin);
+    // useEffect(() => {
+    //     fetch(`https://pbsofficeinfosql.onrender.com/books`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setBookInfo(data);
+    //             console.log(data);
+
+    //         })
+    // }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/books`)
+        fetch(`https://pbsofficeinfosql.onrender.com/booksByzonal/${admin?.zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setBookInfo(data);
                 console.log(data);
-
             })
-    }, []);
+    }, [admin?.zonal_code]);
     const btnEdit = id => {
         const proceed = window.confirm('Are You Sure You Want To Update The Book!');
         console.log(id, proceed);
