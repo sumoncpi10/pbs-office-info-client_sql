@@ -48,7 +48,7 @@ const DNPInfo = () => {
     //         })
     // }, [book]);
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfosql.onrender.com/users`)
             .then(res => res.json())
             .then(data => {
                 // console.log(data);
@@ -60,7 +60,7 @@ const DNPInfo = () => {
     const btnSearch = (e) => {
         e.preventDefault();
         const textSearch = e.target.textSearch.value;
-        fetch(`http://localhost:5000/book/${textSearch}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/book/${textSearch}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -90,7 +90,7 @@ const DNPInfo = () => {
         console.log(product);
         // send data to the server
 
-        fetch('http://localhost:5000/cashAdd', {
+        fetch('https://pbsofficeinfosql.onrender.com/cashAdd', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

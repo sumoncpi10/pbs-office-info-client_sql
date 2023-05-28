@@ -42,7 +42,7 @@ const Posting = () => {
     const [luser, SetlUser] = useState([]);
     // console.log(user)
     useEffect(() => {
-        fetch(`http://localhost:5000/userId/${id}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/userId/${id}`)
             .then(res => res.json())
             .then(data => {
                 console.log(data[0]);
@@ -51,7 +51,7 @@ const Posting = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/zonals/${pbs_code}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
@@ -59,7 +59,7 @@ const Posting = () => {
             })
     }, [pbs_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/ccs/${zonal_code}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
@@ -107,7 +107,7 @@ const Posting = () => {
 
         console.log(product);
         // send data to the server
-        fetch(`http://localhost:5000/userPosting/${id}`, {
+        fetch(`https://pbsofficeinfosql.onrender.com/userPosting/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'

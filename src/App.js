@@ -31,7 +31,7 @@ function App() {
   const [u, setU] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users`)
+    fetch(`https://pbsofficeinfosql.onrender.com/users`)
       .then(res => res.json())
       .then(data => {
         // console.log(data);

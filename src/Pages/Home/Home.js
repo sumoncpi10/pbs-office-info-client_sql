@@ -17,7 +17,7 @@ const Home = () => {
     const [amountOfDcConsumer, setamountOfDcConsumer] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/collections`)
+        fetch(`https://pbsofficeinfosql.onrender.com/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);

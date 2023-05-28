@@ -21,7 +21,7 @@ const CollectionReports = () => {
     const [AmmountOfDC, setAmmountOfDC] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/collections`)
+        fetch(`https://pbsofficeinfosql.onrender.com/collections`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);
@@ -31,7 +31,7 @@ const CollectionReports = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/users`)
+        fetch(`https://pbsofficeinfosql.onrender.com/users`)
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -40,7 +40,7 @@ const CollectionReports = () => {
             })
     }, []);
     useEffect(() => {
-        fetch(`http://localhost:5000/zonals/${pbs_code}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/zonals/${pbs_code}`)
             .then(res => res.json())
             .then(data => {
                 setZonals(data);
@@ -48,7 +48,7 @@ const CollectionReports = () => {
             })
     }, [pbs_code]);
     useEffect(() => {
-        fetch(`http://localhost:5000/ccs/${zonal_code}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/ccs/${zonal_code}`)
             .then(res => res.json())
             .then(data => {
                 setCcs(data);
@@ -92,7 +92,7 @@ const CollectionReports = () => {
         const assign_to = e.target.assign_to.value;
         const collected_by = e.target.collected_by.value;
         console.log(pbs_code, zonal_code, cc_code, bookNo, dateFrom, dateTo, assign_to, collected_by);
-        fetch(`http://localhost:5000/Collection?pbs_code=${pbs_code}&zonal_code=${zonal_code}&cc_code=${cc_code}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}&assign_to=${assign_to}&collected_by=${collected_by}`)
+        fetch(`https://pbsofficeinfosql.onrender.com/Collection?pbs_code=${pbs_code}&zonal_code=${zonal_code}&cc_code=${cc_code}&dateFrom=${dateFrom}&dateTo=${dateTo}&bookNo=${bookNo}&assign_to=${assign_to}&collected_by=${collected_by}`)
             .then(res => res.json())
             .then(data => {
                 setCollectionInfo(data);
