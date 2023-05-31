@@ -85,6 +85,7 @@ const CollectionReports = () => {
         const pbs_code = e.target.pbs_code.value;
         const zonal_code = e.target.zonal_code.value;
         const cc_code = e.target.cc_code.value;
+        // const cc_code = e.target.cc_code.value;
 
         const dateFrom = e.target.dateFrom.value;
         const dateTo = e.target.dateTo.value;
